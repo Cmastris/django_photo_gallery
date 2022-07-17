@@ -1,0 +1,17 @@
+# Cache
+__pycache__/
+
+# PyCharm files
+.idea/
+
+# Virtual environment
+.venv
+venv/
+venv.bak/
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media
