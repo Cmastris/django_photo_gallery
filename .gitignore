@@ -15,4 +15,7 @@ venv.bak/
 *.pyc
 db.sqlite3
 media
+
+#Other
 secrets.py
+photo_gallery/**/notes.py
