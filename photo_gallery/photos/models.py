@@ -21,6 +21,11 @@ class Photo(models.Model):
                                  processors=[ResizeToFit(width=500)],
                                  format='JPEG')
 
+    # Used in the admin interface
+    thumbnail = ImageSpecField(source='large_image',
+                               processors=[ResizeToFit(width=250)],
+                               format='JPEG')
+
 
 # TODO: Collection with name (unique), description, slug (unique)
 # https://docs.djangoproject.com/en/4.0/ref/models/fields/#unique
