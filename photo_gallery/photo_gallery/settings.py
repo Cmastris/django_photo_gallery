@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'imagekit',
     'photos.apps.PhotosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
