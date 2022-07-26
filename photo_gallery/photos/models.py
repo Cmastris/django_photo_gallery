@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.html import mark_safe
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFit
 
@@ -25,6 +26,11 @@ class Photo(models.Model):
     thumbnail = ImageSpecField(source='large_image',
                                processors=[ResizeToFit(width=250)],
                                format='JPEG')
+
+    def thumbnail_img_tag(self):
+        return mark_safe('<img src="{}" />'.format(self.thumbnail.url))
+
+    thumbnail_img_tag.short_description = 'Thumbnail'
 
 
 # TODO: Collection with name (unique), description, slug (unique)
