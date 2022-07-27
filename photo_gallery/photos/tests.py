@@ -1,9 +1,11 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from pathlib import Path
+
+from .admin import PhotoAdmin
 
 
 def create_uploaded_file_object(image_path):
@@ -38,3 +40,25 @@ class PhotoModelTests(TestCase):
         """Test that ImageSpecField upsizes a mock upload image to a width of 500px."""
         photo = MockPhoto()
         self.assertEqual(photo.upsized_image.width, 500)
+
+
+class MockPhotoAdmin(PhotoAdmin):
+    def __init__(self):
+        pass
+
+
+class PhotoAdminTests(TestCase):
+
+    request = RequestFactory()
+
+    def test_get_fields_add(self):
+        """Test that `thumbnail_img_tag` is excluded from add view `fields`"""
+        photo_admin = MockPhotoAdmin()
+        fields = photo_admin.get_fields(self.request)
+        self.assertEqual(fields, ['large_image'])
+
+    def test_get_fields_change(self):
+        """Test that `thumbnail_img_tag` is included in change view `fields`"""
+        photo_admin = MockPhotoAdmin()
+        fields = photo_admin.get_fields(self.request, obj=MockPhoto())
+        self.assertEqual(fields, ['large_image', 'thumbnail_img_tag'])
