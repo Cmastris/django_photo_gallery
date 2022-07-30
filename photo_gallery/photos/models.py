@@ -6,7 +6,7 @@ from imagekit.processors import ResizeToFit
 
 
 class Photo(models.Model):
-    # TODO: title, slug, description, country, date, featured, collections (0+)
+    # TODO: slug, description, country, date, featured, collections (0+)
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -31,6 +31,11 @@ class Photo(models.Model):
     @admin.display(description='Thumbnail')
     def thumbnail_img_tag(self):
         return mark_safe('<img src="{}" />'.format(self.thumbnail.url))
+
+    title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
 
 
 # TODO: Collection with name (unique), description, slug (unique)

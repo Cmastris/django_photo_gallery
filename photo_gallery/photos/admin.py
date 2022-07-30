@@ -4,8 +4,8 @@ from .models import Photo
 
 
 class PhotoAdmin(admin.ModelAdmin):
-    fields = ['large_image', 'thumbnail_img_tag']
-    list_display = ('__str__', 'thumbnail_img_tag')
+    fields = ['large_image', 'thumbnail_img_tag', 'title']
+    list_display = ('title', 'thumbnail_img_tag')
 
     # Display a non-editable thumbnail on Photo change pages
     readonly_fields = ['thumbnail_img_tag']
