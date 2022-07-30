@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 from django.utils.html import mark_safe
 from imagekit.models import ImageSpecField, ProcessedImageField
@@ -22,15 +23,14 @@ class Photo(models.Model):
                                  processors=[ResizeToFit(width=500)],
                                  format='JPEG')
 
-    # Used in the admin interface
+    # Display in the admin interface via `thumbnail_img_tag()`
     thumbnail = ImageSpecField(source='large_image',
                                processors=[ResizeToFit(width=250)],
                                format='JPEG')
 
+    @admin.display(description='Thumbnail')
     def thumbnail_img_tag(self):
         return mark_safe('<img src="{}" />'.format(self.thumbnail.url))
-
-    thumbnail_img_tag.short_description = 'Thumbnail'
 
 
 # TODO: Collection with name (unique), description, slug (unique)
