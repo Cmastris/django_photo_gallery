@@ -1,8 +1,17 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_slug
 from django.db import models
 from django.utils.html import mark_safe
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFit
+
+
+def validate_lowercase(string):
+    # https://docs.djangoproject.com/en/4.0/ref/validators/
+    lower_str = string.lower()
+    if string != lower_str:
+        raise ValidationError("All letters must be lowercase.")
 
 
 class Photo(models.Model):

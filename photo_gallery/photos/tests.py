@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.test import RequestFactory, TestCase
@@ -6,6 +7,7 @@ from imagekit.processors import ResizeToFit
 from pathlib import Path
 
 from .admin import PhotoAdmin
+from .models import validate_lowercase
 
 
 def create_uploaded_file_object(image_path):
@@ -62,3 +64,18 @@ class PhotoAdminTests(TestCase):
         photo_admin = MockPhotoAdmin()
         fields = photo_admin.get_fields(self.request, obj=MockPhoto())
         self.assertEqual(fields, ['large_image', 'thumbnail_img_tag', 'title'])
+
+
+class ValidatorTests(TestCase):
+    def test_lowercase_validates(self):
+        lower_str = "lowercase-string-100! "
+        try:
+            validate_lowercase(lower_str)
+        except ValidationError:
+            self.fail("validate_lowercase() raised ValidationError unexpectedly "
+                      "for string `{}`.".format(lower_str))
+
+    def test_lowercase_raises(self):
+        mixed_case_str = "mixed-Case-string-100! "
+        with self.assertRaises(ValidationError):
+            validate_lowercase(mixed_case_str)
