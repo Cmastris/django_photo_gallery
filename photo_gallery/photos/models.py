@@ -15,7 +15,7 @@ def validate_lowercase(string):
 
 
 class Photo(models.Model):
-    # TODO: slug, description, country, date, featured, collections (0+)
+    # TODO: description, country, date, featured, collections (0+)
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -42,6 +42,14 @@ class Photo(models.Model):
         return mark_safe('<img src="{}" />'.format(self.thumbnail.url))
 
     title = models.CharField(max_length=255)
+
+    slug_guidelines = "Enter a unique, descriptive URL path (e.g. based on the title) containing " \
+                      "only lowercase letters, numbers,  and hyphens (instead of spaces). "
+
+    slug = models.SlugField(max_length=60,
+                            unique=True,
+                            help_text=slug_guidelines,
+                            validators=[validate_slug, validate_lowercase])
 
     def __str__(self):
         return self.title
