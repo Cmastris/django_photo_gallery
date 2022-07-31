@@ -74,6 +74,7 @@ class PhotoAdminTests(TestCase):
 
 class ValidatorTests(TestCase):
     def test_lowercase_validates(self):
+        """Test that `validate_lowercase()` doesn't incorrectly raise a ValidationError"""
         lower_str = "lowercase-string-100! "
         try:
             validate_lowercase(lower_str)
@@ -82,6 +83,7 @@ class ValidatorTests(TestCase):
                       "for string `{}`.".format(lower_str))
 
     def test_lowercase_raises(self):
+        """Test that `validate_lowercase()` correctly raises a ValidationError"""
         mixed_case_str = "mixed-Case-string-100! "
         with self.assertRaises(ValidationError):
             validate_lowercase(mixed_case_str)
