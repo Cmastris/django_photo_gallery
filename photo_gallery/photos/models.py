@@ -57,7 +57,7 @@ class Photo(models.Model):
     location = models.CharField(max_length=255, help_text=loc_guidelines)
 
     def __str__(self):
-        return self.title
+        return "{} ({})".format(self.title, self.slug)
 
 
 # TODO: Country with name (unique)

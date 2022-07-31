@@ -7,7 +7,7 @@ from imagekit.processors import ResizeToFit
 from pathlib import Path
 
 from .admin import PhotoAdmin
-from .models import validate_lowercase
+from .models import Photo, validate_lowercase
 
 
 def create_uploaded_file_object(image_path):
@@ -42,6 +42,11 @@ class PhotoModelTests(TestCase):
         """Test that ImageSpecField upsizes a mock upload image to a width of 500px."""
         photo = MockPhoto()
         self.assertEqual(photo.upsized_image.width, 500)
+
+    def test_photo_str(self):
+        """Test the Photo __str__ method."""
+        photo = Photo.objects.create(title="Test Title", slug="test-slug")
+        self.assertEqual(photo.__str__(), "Test Title (test-slug)")
 
 
 class MockPhotoAdmin(PhotoAdmin):
