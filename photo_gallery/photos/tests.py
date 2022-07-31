@@ -57,14 +57,14 @@ class PhotoAdminTests(TestCase):
         """Test that `thumbnail_img_tag` is excluded from add view `fields`"""
         photo_admin = MockPhotoAdmin()
         fields = photo_admin.get_fields(self.request)
-        self.assertEqual(fields, ['large_image', 'title', 'slug', 'description'])
+        self.assertEqual(fields, ['large_image', 'title', 'slug', 'description', 'location'])
 
     def test_get_fields_change(self):
         """Test that `thumbnail_img_tag` is included in change view `fields`"""
         photo_admin = MockPhotoAdmin()
         fields = photo_admin.get_fields(self.request, obj=MockPhoto())
         self.assertEqual(fields, ['large_image', 'thumbnail_img_tag', 'title', 'slug',
-                                  'description'])
+                                  'description', 'location'])
 
 
 class ValidatorTests(TestCase):

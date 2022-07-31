@@ -15,7 +15,7 @@ def validate_lowercase(string):
 
 
 class Photo(models.Model):
-    # TODO: location, country (many to one), date, featured, collections (many to many), published
+    # TODO: country (many to one), date, featured, collections (many to many), published
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -52,6 +52,9 @@ class Photo(models.Model):
                             validators=[validate_slug, validate_lowercase])
 
     description = models.TextField(max_length=5000)
+
+    loc_guidelines = "Enter the specific location where the photo was taken."
+    location = models.CharField(max_length=255, help_text=loc_guidelines)
 
     def __str__(self):
         return self.title
