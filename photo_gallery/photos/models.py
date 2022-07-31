@@ -15,7 +15,7 @@ def validate_lowercase(string):
 
 
 class Photo(models.Model):
-    # TODO: description, country, date, featured, collections (0+)
+    # TODO: location, country (many to one), date, featured, collections (many to many), published
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -51,9 +51,11 @@ class Photo(models.Model):
                             help_text=slug_guidelines,
                             validators=[validate_slug, validate_lowercase])
 
+    description = models.TextField(max_length=5000)
+
     def __str__(self):
         return self.title
 
 
-# TODO: Collection with name (unique), description, slug (unique)
-# https://docs.djangoproject.com/en/4.0/ref/models/fields/#unique
+# TODO: Country with name (unique)
+# TODO: Collection with name (unique), description, slug (unique), published

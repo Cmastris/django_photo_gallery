@@ -4,7 +4,7 @@ from .models import Photo
 
 
 class PhotoAdmin(admin.ModelAdmin):
-    fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug']
+    fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug', 'description']
 
     # Generate a suggested slug from the title in the "add" form
     prepopulated_fields = {"slug": ("title",)}
