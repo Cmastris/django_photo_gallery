@@ -5,10 +5,14 @@ from .models import Photo
 
 class PhotoAdmin(admin.ModelAdmin):
     fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug']
-    list_display = ('title', 'thumbnail_img_tag', 'slug')
+
+    # Generate a suggested slug from the title in the "add" form
+    prepopulated_fields = {"slug": ("title",)}
 
     # Display a non-editable thumbnail on Photo change pages
     readonly_fields = ['thumbnail_img_tag']
+
+    list_display = ('title', 'thumbnail_img_tag', 'slug')
 
     def get_fields(self, request, obj=None):
         """Return a list of fields (str) for the Photo add form (obj=None) or change form.
