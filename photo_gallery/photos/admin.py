@@ -1,10 +1,11 @@
 import copy
 from django.contrib import admin
-from .models import Photo
+from .models import Country, Photo
 
 
 class PhotoAdmin(admin.ModelAdmin):
-    fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug', 'description', 'location']
+    fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug', 'description', 'location',
+              'country']
 
     # Generate a suggested slug from the title in the "add" form
     prepopulated_fields = {"slug": ("title",)}
@@ -30,3 +31,4 @@ class PhotoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Photo, PhotoAdmin)
+admin.site.register(Country)

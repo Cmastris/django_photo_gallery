@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
-from django.core.validators import validate_slug
+from django.core.validators import MinLengthValidator, validate_slug
 from django.db import models
 from django.utils.html import mark_safe
 from imagekit.models import ImageSpecField, ProcessedImageField
@@ -14,8 +14,15 @@ def validate_lowercase(string):
         raise ValidationError("All letters must be lowercase.")
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=255, unique=True, validators=[MinLengthValidator(2)])
+
+    def __str__(self):
+        return self.name
+
+
 class Photo(models.Model):
-    # TODO: country (many to one), date, featured, collections (many to many), published
+    # TODO: date, featured, collections (many to many), published
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -56,9 +63,11 @@ class Photo(models.Model):
     loc_guidelines = "Enter the specific location where the photo was taken."
     location = models.CharField(max_length=255, help_text=loc_guidelines)
 
+    # Country is optional
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
+
     def __str__(self):
         return "{} ({})".format(self.title, self.slug)
 
 
-# TODO: Country with name (unique)
 # TODO: Collection with name (unique), description, slug (unique), published
