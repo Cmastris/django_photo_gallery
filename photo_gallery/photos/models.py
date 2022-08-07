@@ -20,6 +20,9 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "countries"
+
 
 class Photo(models.Model):
     # TODO: date, featured, collections (many to many), published
