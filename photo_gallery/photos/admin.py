@@ -3,6 +3,16 @@ from django.contrib import admin
 from .models import Country, Photo
 
 
+class CountryAdmin(admin.ModelAdmin):
+    fields = ['name', 'photo_count']
+    readonly_fields = ['photo_count']
+    list_display = ('name', 'photo_count')
+
+    def photo_count(self, obj):
+        """Return the number of `Photo` objects associated with each `Country`."""
+        return Photo.objects.filter(country=obj).count()
+
+
 class PhotoAdmin(admin.ModelAdmin):
     fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug', 'description', 'location',
               'country']
@@ -30,5 +40,5 @@ class PhotoAdmin(admin.ModelAdmin):
         return super().get_fields(request, obj)
 
 
+admin.site.register(Country, CountryAdmin)
 admin.site.register(Photo, PhotoAdmin)
-admin.site.register(Country)
