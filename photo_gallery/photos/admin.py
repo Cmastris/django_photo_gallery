@@ -24,6 +24,7 @@ class PhotoAdmin(admin.ModelAdmin):
     readonly_fields = ['thumbnail_img_tag']
 
     list_display = ('title', 'thumbnail_img_tag', 'slug')
+    list_filter = ['country']
 
     def get_fields(self, request, obj=None):
         """Return a list of fields (str) for the Photo add form (obj=None) or change form.
