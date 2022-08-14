@@ -26,7 +26,7 @@ class Country(models.Model):
 
 
 class Photo(models.Model):
-    # TODO: date, featured, collections (many to many), published
+    # TODO: featured, collections (many to many), published
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -69,6 +69,8 @@ class Photo(models.Model):
 
     # Country is optional
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
+
+    date_taken = models.DateField()
 
     def __str__(self):
         return "{} ({})".format(self.title, self.slug)
