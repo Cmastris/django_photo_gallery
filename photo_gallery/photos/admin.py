@@ -3,6 +3,10 @@ from django.contrib import admin
 from .models import Collection, Country, Photo
 
 
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+
+
 class CountryAdmin(admin.ModelAdmin):
     fields = ['name', 'photo_count']
     readonly_fields = ['photo_count']
@@ -43,6 +47,6 @@ class PhotoAdmin(admin.ModelAdmin):
         return super().get_fields(request, obj)
 
 
-admin.site.register(Collection)
+admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Country, CountryAdmin)
 admin.site.register(Photo, PhotoAdmin)
