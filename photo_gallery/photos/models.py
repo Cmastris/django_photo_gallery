@@ -77,9 +77,17 @@ class Photo(models.Model):
 
 
 class Collection(models.Model):
-    # TODO: slug (unique), published
+    # TODO: published
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(max_length=5000)
+
+    slug_guidelines = "Enter a unique, descriptive URL path (e.g. based on the name) containing " \
+                      "only lowercase letters, numbers,  and hyphens (instead of spaces). "
+
+    slug = models.SlugField(max_length=50,
+                            unique=True,
+                            help_text=slug_guidelines,
+                            validators=[validate_slug, validate_lowercase])
 
     def __str__(self):
         return self.name
