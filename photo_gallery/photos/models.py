@@ -45,7 +45,7 @@ class Photo(models.Model):
 
     # Display in the admin interface via `thumbnail_img_tag()`
     thumbnail = ImageSpecField(source='large_image',
-                               processors=[ResizeToFit(width=250)],
+                               processors=[ResizeToFit(width=150)],
                                format='JPEG')
 
     @admin.display(description='Thumbnail')
