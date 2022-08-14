@@ -26,7 +26,7 @@ class Country(models.Model):
 
 
 class Photo(models.Model):
-    # TODO: featured, collections (many to many), published
+    # TODO: featured, published
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -77,8 +77,9 @@ class Photo(models.Model):
 
 
 class Collection(models.Model):
-    # TODO: description, slug (unique), published
+    # TODO: slug (unique), published
     name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(max_length=5000)
 
     def __str__(self):
         return self.name
