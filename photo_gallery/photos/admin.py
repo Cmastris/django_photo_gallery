@@ -24,7 +24,7 @@ class PhotoAdmin(admin.ModelAdmin):
     readonly_fields = ['thumbnail_img_tag']
 
     list_display = ('title', 'thumbnail_img_tag', 'slug')
-    list_filter = ['country']
+    list_filter = ['date_taken', 'country']
     search_fields = ['title', 'description', 'location']
     search_help_text = "Search photo titles, descriptions, and locations."
 
