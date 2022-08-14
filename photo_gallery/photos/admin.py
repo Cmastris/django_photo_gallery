@@ -1,6 +1,6 @@
 import copy
 from django.contrib import admin
-from .models import Country, Photo
+from .models import Collection, Country, Photo
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -43,5 +43,6 @@ class PhotoAdmin(admin.ModelAdmin):
         return super().get_fields(request, obj)
 
 
+admin.site.register(Collection)
 admin.site.register(Country, CountryAdmin)
 admin.site.register(Photo, PhotoAdmin)
