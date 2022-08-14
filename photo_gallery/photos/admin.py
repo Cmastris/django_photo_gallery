@@ -4,7 +4,7 @@ from .models import Collection, Country, Photo
 
 
 class CollectionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
+    list_display = ('name', 'slug', 'published')
 
     # Generate a suggested slug from the name in the "add" form
     prepopulated_fields = {"slug": ("name",)}
