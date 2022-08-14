@@ -23,7 +23,7 @@ class PhotoAdmin(admin.ModelAdmin):
     # Display a non-editable thumbnail on Photo change pages
     readonly_fields = ['thumbnail_img_tag']
 
-    list_display = ('title', 'thumbnail_img_tag', 'slug')
+    list_display = ('title', 'thumbnail_img_tag', 'date_taken', 'slug')
     list_filter = ['date_taken', 'country']
     search_fields = ['title', 'description', 'location']
     search_help_text = "Search photo titles, descriptions, and locations."
