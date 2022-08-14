@@ -76,4 +76,9 @@ class Photo(models.Model):
         return "{} ({})".format(self.title, self.slug)
 
 
-# TODO: Collection with name (unique), description, slug (unique), published
+class Collection(models.Model):
+    # TODO: description, slug (unique), published
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
