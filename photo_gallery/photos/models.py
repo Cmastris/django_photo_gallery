@@ -93,5 +93,7 @@ class Photo(models.Model):
 
     date_taken = models.DateField()
 
+    collections = models.ManyToManyField(Collection)
+
     def __str__(self):
         return "{} ({})".format(self.title, self.slug)

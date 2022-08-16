@@ -22,13 +22,16 @@ class CountryAdmin(admin.ModelAdmin):
 
 class PhotoAdmin(admin.ModelAdmin):
     fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug', 'description', 'location',
-              'country', 'date_taken']
+              'country', 'date_taken', 'collections']
 
     # Generate a suggested slug from the title in the "add" form
     prepopulated_fields = {"slug": ("title",)}
 
     # Display a non-editable thumbnail on Photo change pages
     readonly_fields = ['thumbnail_img_tag']
+
+    # Use JS filter interface for selecting collections
+    filter_horizontal = ('collections',)
 
     list_display = ('title', 'thumbnail_img_tag', 'date_taken', 'slug')
     list_filter = ['date_taken', 'country']

@@ -47,7 +47,7 @@ class PhotoModelTests(TestCase):
     def test_photo_str(self):
         """Test the Photo __str__ method."""
         date = datetime.date(2022, 1, 1)
-        photo = Photo.objects.create(title="Test Title", slug="test-slug",date_taken=date)
+        photo = Photo.objects.create(title="Test Title", slug="test-slug", date_taken=date)
 
         self.assertEqual(photo.__str__(), "Test Title (test-slug)")
 
@@ -66,14 +66,15 @@ class PhotoAdminTests(TestCase):
         photo_admin = MockPhotoAdmin()
         fields = photo_admin.get_fields(self.request)
         self.assertEqual(fields, ['large_image', 'title', 'slug', 'description', 'location',
-                                  'country', 'date_taken'])
+                                  'country', 'date_taken', 'collections'])
 
     def test_get_fields_change(self):
         """Test that `thumbnail_img_tag` is included in change view `fields`"""
         photo_admin = MockPhotoAdmin()
         fields = photo_admin.get_fields(self.request, obj=MockPhoto())
         self.assertEqual(fields, ['large_image', 'thumbnail_img_tag', 'title', 'slug',
-                                  'description', 'location', 'country', 'date_taken'])
+                                  'description', 'location', 'country', 'date_taken',
+                                  'collections'])
 
 
 class ValidatorTests(TestCase):
