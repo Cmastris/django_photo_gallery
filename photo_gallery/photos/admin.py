@@ -4,6 +4,8 @@ from .models import Collection, Country, Photo
 
 
 class CollectionAdmin(admin.ModelAdmin):
+    fields = ['name', 'description', 'slug', 'photo_count', 'published']
+    readonly_fields = ['photo_count']
     list_display = ('name', 'slug', 'photo_count', 'published')
 
     # Generate a suggested slug from the name in the "add" form
