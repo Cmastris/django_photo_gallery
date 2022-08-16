@@ -4,10 +4,14 @@ from .models import Collection, Country, Photo
 
 
 class CollectionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'published')
+    list_display = ('name', 'slug', 'photo_count', 'published')
 
     # Generate a suggested slug from the name in the "add" form
     prepopulated_fields = {"slug": ("name",)}
+
+    def photo_count(self, obj):
+        """Return the number of `Photo` objects associated with each `Collection`."""
+        return Photo.objects.filter(collections__in=[obj]).count()
 
 
 class CountryAdmin(admin.ModelAdmin):
