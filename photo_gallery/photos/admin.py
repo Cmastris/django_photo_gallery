@@ -39,7 +39,7 @@ class PhotoAdmin(admin.ModelAdmin):
     # Use JS filter interface for selecting collections
     filter_horizontal = ('collections',)
 
-    list_display = ('title', 'thumbnail_img_tag', 'date_taken', 'slug')
+    list_display = ('title', 'thumbnail_img_tag', 'slug', 'published')
     list_display_links = ('title', 'thumbnail_img_tag')
     list_filter = ['date_taken', 'collections', 'country']
     search_fields = ['title', 'description', 'location']
