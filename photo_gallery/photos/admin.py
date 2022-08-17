@@ -40,6 +40,7 @@ class PhotoAdmin(admin.ModelAdmin):
     filter_horizontal = ('collections',)
 
     list_display = ('title', 'thumbnail_img_tag', 'date_taken', 'slug')
+    list_display_links = ('title', 'thumbnail_img_tag')
     list_filter = ['date_taken', 'collections', 'country']
     search_fields = ['title', 'description', 'location']
     search_help_text = "Search photo titles, descriptions, and locations."
