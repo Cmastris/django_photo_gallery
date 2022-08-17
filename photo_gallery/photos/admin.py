@@ -28,7 +28,7 @@ class CountryAdmin(admin.ModelAdmin):
 
 class PhotoAdmin(admin.ModelAdmin):
     fields = ['large_image', 'thumbnail_img_tag', 'title', 'slug', 'description', 'location',
-              'country', 'date_taken', 'collections']
+              'country', 'date_taken', 'collections', 'featured']
 
     # Generate a suggested slug from the title in the "add" form
     prepopulated_fields = {"slug": ("title",)}
