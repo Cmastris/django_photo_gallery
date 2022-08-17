@@ -92,7 +92,8 @@ class Photo(models.Model):
 
     date_taken = models.DateField()
 
-    collections = models.ManyToManyField(Collection)
+    # Collections are optional
+    collections = models.ManyToManyField(Collection, blank=True)
 
     featured = models.BooleanField(default=False)
 
