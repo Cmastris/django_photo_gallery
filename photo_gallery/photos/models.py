@@ -47,7 +47,6 @@ class Country(models.Model):
 
 
 class Photo(models.Model):
-    # TODO: published
     img_guidelines = "Upload images with a width of 2000px or greater " \
                      "to avoid low visual quality (e.g. pixelation) on larger screen sizes."
 
@@ -96,6 +95,8 @@ class Photo(models.Model):
     collections = models.ManyToManyField(Collection)
 
     featured = models.BooleanField(default=False)
+
+    published = models.BooleanField(default=True)
 
     def __str__(self):
         return "{} ({})".format(self.title, self.slug)
