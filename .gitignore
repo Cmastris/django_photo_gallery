@@ -4,6 +4,9 @@ __pycache__/
 # PyCharm files
 .idea/
 
+# VSC files
+.vscode/
+
 # Virtual environment
 .venv
 venv/
