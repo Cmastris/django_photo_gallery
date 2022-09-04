@@ -18,7 +18,7 @@ def create_uploaded_file_object(image_path):
                               content_type='image/jpeg')
 
 
-class MockPhoto(models.Model):
+class MockPhotoImages(models.Model):
     large_img_path = Path(__file__).resolve().parent / 'test_images/2500x1500.jpg'
     mock_large_upload = create_uploaded_file_object(large_img_path)
     downsized_image = ImageSpecField(source='mock_large_upload',
@@ -36,12 +36,12 @@ class PhotoModelTests(TestCase):
 
     def test_image_downsizing(self):
         """Test that ImageSpecField downsizes a mock upload image to a width of 500px."""
-        photo = MockPhoto()
+        photo = MockPhotoImages()
         self.assertEqual(photo.downsized_image.width, 500)
 
     def test_image_upsizing(self):
         """Test that ImageSpecField upsizes a mock upload image to a width of 500px."""
-        photo = MockPhoto()
+        photo = MockPhotoImages()
         self.assertEqual(photo.upsized_image.width, 500)
 
     def test_photo_str(self):
@@ -71,7 +71,7 @@ class PhotoAdminTests(TestCase):
     def test_get_fields_change(self):
         """Test that `thumbnail_img_tag` is included in change view `fields`"""
         photo_admin = MockPhotoAdmin()
-        fields = photo_admin.get_fields(self.request, obj=MockPhoto())
+        fields = photo_admin.get_fields(self.request, obj=MockPhotoImages())
         self.assertEqual(fields, ['large_image', 'thumbnail_img_tag', 'title', 'slug',
                                   'description', 'location', 'country', 'date_taken',
                                   'collections', 'featured', 'published'])
