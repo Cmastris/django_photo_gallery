@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
+from .models import Photo
 
-# Create your views here.
+
+class PhotoDetailView(DetailView):
+    model = Photo
+    # Return a 404 if the photo isn't published
+    queryset = Photo.objects.filter(published=True)

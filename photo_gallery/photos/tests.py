@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.test import RequestFactory, TestCase
+from django.urls import reverse
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from pathlib import Path
@@ -75,6 +76,36 @@ class PhotoAdminTests(TestCase):
         self.assertEqual(fields, ['large_image', 'thumbnail_img_tag', 'title', 'slug',
                                   'description', 'location', 'country', 'date_taken',
                                   'collections', 'featured', 'published'])
+
+
+def create_photo(slug, title="Photo", description="Description", location="Location",
+                 date_taken=datetime.date(2022, 1, 1), featured=False, published=True):
+
+    return Photo.objects.create(slug=slug, title=title, description=description, location=location,
+                                date_taken=date_taken, featured=featured, published=published)
+
+
+class PhotoDetailViewTests(TestCase):
+
+    def test_published_status(self):
+        """Test that a published Photo returns a 200 status code."""
+        test_slug = "published-photo"
+        create_photo(slug=test_slug, published=True)
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_unpublished_status(self):
+        """Test that an unpublished Photo returns a 404 status code."""
+        test_slug = "unpublished-photo"
+        create_photo(slug=test_slug, published=False)
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_404_status(self):
+        """Test that a slug without an associated Photo returns a 404 status code."""
+        test_slug = "404-slug"
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertEqual(response.status_code, 404)
 
 
 class ValidatorTests(TestCase):

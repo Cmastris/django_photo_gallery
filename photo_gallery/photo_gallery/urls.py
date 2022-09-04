@@ -18,7 +18,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
+from photos.views import PhotoDetailView
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/#serving-files-uploaded-by-a-user-during-development
