@@ -81,8 +81,12 @@ class PhotoAdminTests(TestCase):
 def create_photo(slug, title="Photo", description="Description", location="Location",
                  date_taken=datetime.date(2022, 1, 1), featured=False, published=True):
 
+    large_img_path = Path(__file__).resolve().parent / 'test_images/2500x1500.jpg'
+    mock_large_upload = create_uploaded_file_object(large_img_path)
+
     return Photo.objects.create(slug=slug, title=title, description=description, location=location,
-                                date_taken=date_taken, featured=featured, published=published)
+                                date_taken=date_taken, featured=featured, published=published,
+                                large_image=mock_large_upload)
 
 
 class PhotoDetailViewTests(TestCase):

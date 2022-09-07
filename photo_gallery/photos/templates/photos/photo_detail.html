@@ -1,3 +1,25 @@
 {% extends "base.html" %}
-{% block title %}<title>Photo | Chris Mastris</title>{% endblock %}
-{% block content %}<p>Photo Content</p>{% endblock %}
+{% block title %}<title>{{ photo.title }} | Chris Mastris</title>{% endblock %}
+{% block content %}
+<div class="container-lg text-center">
+  <img srcset="{{ photo.small_image.url }} 500w,
+               {{ photo.large_image.url }} 2000w"
+       sizes="(max-width:600px) 95vw, 80vw"
+       src="{{ photo.large_image.url }}"
+       class="img-fluid border border-4 rounded-3" alt="{{ photo.title }}">
+</div>
+<div class="container-lg text-center">  
+  <h1 class="h2 mt-3">{{ photo.title }}</h1>
+  <p>
+    <div class="row justify-content-md-center gy-1 text-muted">
+      <div class="col-md-auto"><i class="bi bi-geo-alt"></i> {{ photo.location }}</div>
+      <div class="col-md-auto"><i class="bi bi-calendar-event"></i> {{ photo.date_taken|date:"F Y" }}</div>
+    </div>
+  </p>
+  <div class="row justify-content-lg-center">
+    <div class="col-lg-9">
+      <p>{{ photo.description }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
