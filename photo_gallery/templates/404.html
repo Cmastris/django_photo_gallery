@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>404 (Not Found)</h1>
-<p>Sorry, the requested URL ({{ request.get_full_path }}) can't be found.</p>
+<div class="container text-center mt-5 mb-5">
+  <h1 class="mb-4">404 (Not Found)</h1>
+  <p class="h6">Sorry, the requested URL ({{ request.get_full_path }}) can't be found.</p>
+</div>
 {% endblock %}

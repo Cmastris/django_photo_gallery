@@ -17,12 +17,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+from django.views.defaults import page_not_found
 
 from photos.views import PhotoDetailView
+
+
+def custom_404_template(request):
+    return page_not_found(request, None)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
+    path('404', custom_404_template),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/#serving-files-uploaded-by-a-user-during-development
