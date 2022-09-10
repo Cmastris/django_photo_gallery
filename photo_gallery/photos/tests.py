@@ -110,6 +110,48 @@ class PhotoDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+class HomepageViewTests(TestCase):
+
+    def test_qs_unpublished_filtering(self):
+        """Test that only `published` Photos are included in the queryset."""
+        published_photo = create_photo(slug="published-photo", published=True)
+        create_photo(slug="unpublished-photo", published=False)
+
+        response = self.client.get(reverse("homepage"))
+        self.assertQuerysetEqual(response.context['photo_list'], [published_photo])
+
+    def test_qs_featured_ordering(self):
+        """Test that `featured` Photos are ordered first in the queryset."""
+        create_photo(slug="unfeatured1", featured=False)
+        featured_photo = create_photo(slug="featured", featured=True)
+        create_photo(slug="unfeatured2", featured=False)
+
+        response = self.client.get(reverse("homepage"))
+        self.assertEqual(response.context['photo_list'][0], featured_photo)
+
+    def test_qs_date_taken_ordering(self):
+        """Test that Photos are ordered by descending `date_taken` in the queryset."""
+        p_2021 = create_photo(slug="2021", date_taken=datetime.date(2021, 1, 1))
+        p_2022 = create_photo(slug="2022", date_taken=datetime.date(2022, 1, 1))
+        p_2020 = create_photo(slug="2020", date_taken=datetime.date(2020, 1, 1))
+
+        response = self.client.get(reverse("homepage"))
+        self.assertQuerysetEqual(response.context['photo_list'], [p_2022, p_2021, p_2020])
+
+    def test_qs_combined_ordering(self):
+        """Test that Photos are ordered by descending `featured` then by descending `date_taken`"""
+        old_date = datetime.date(2020, 1, 1)
+        new_date = datetime.date(2022, 1, 1)
+        p_unfeatured_old = create_photo(slug="unfeatured-old", featured=False, date_taken=old_date)
+        p_featured_new = create_photo(slug="featured-new", featured=True, date_taken=new_date)
+        p_unfeatured_new = create_photo(slug="unfeatured-new", featured=False, date_taken=new_date)
+        p_featured_old = create_photo(slug="featured-old", featured=True, date_taken=old_date)
+
+        response = self.client.get(reverse("homepage"))
+        expected_qs = [p_featured_new, p_featured_old, p_unfeatured_new, p_unfeatured_old]
+        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+
+
 class ValidatorTests(TestCase):
     def test_lowercase_validates(self):
         """Test that `validate_lowercase()` doesn't incorrectly raise a ValidationError"""
