@@ -23,7 +23,7 @@ class CountryAdmin(admin.ModelAdmin):
 
     def photo_count(self, obj):
         """Return the number of `Photo` objects associated with each `Country`."""
-        return Photo.objects.filter(country=obj).count()
+        return Photo.objects.filter(country=obj, country__isnull=False).count()
 
 
 class PhotoAdmin(admin.ModelAdmin):
