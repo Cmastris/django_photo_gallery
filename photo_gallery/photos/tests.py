@@ -156,6 +156,20 @@ class HomepageViewTests(TestCase):
         expected_qs = [p_featured_new, p_featured_old, p_unfeatured_new, p_unfeatured_old]
         self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
 
+    def test_paginated_200_status(self):
+        """Test that a paginated URL with at least 1 associated Photo returns a 200 status code."""
+        # `paginate_by = 6` (6 photos per page)
+        create_published_photos(7)
+        response = self.client.get(reverse("homepage"), {"page": 2})
+        self.assertEqual(response.status_code, 200)
+
+    def test_paginated_404_status(self):
+        """Test that a paginated URL with no associated Photos returns a 404 status code."""
+        # `paginate_by = 6` (6 photos per page)
+        create_photo(slug="test", published=True)
+        response = self.client.get(reverse("homepage"), {"page": 2})
+        self.assertEqual(response.status_code, 404)
+
 
 class ValidatorTests(TestCase):
     def test_lowercase_validates(self):

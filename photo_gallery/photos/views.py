@@ -7,7 +7,8 @@ class HomepageView(ListView):
     # Exclude unpublished photos from photo list
     # Order by featured (featured at start) then by descending date (most recent earlier)
     queryset = Photo.objects.filter(published=True).order_by('-featured', '-date_taken')
-    # TODO: implement pagination
+    # Display 6 photos per page
+    paginate_by = 6
 
 
 class PhotoDetailView(DetailView):
