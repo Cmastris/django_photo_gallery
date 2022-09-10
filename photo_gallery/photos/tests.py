@@ -47,9 +47,7 @@ class PhotoModelTests(TestCase):
 
     def test_photo_str(self):
         """Test the Photo __str__ method."""
-        date = datetime.date(2022, 1, 1)
-        photo = Photo.objects.create(title="Test Title", slug="test-slug", date_taken=date)
-
+        photo = create_photo(title="Test Title", slug="test-slug")
         self.assertEqual(photo.__str__(), "Test Title (test-slug)")
 
 
