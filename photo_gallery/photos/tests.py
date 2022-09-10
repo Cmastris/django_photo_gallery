@@ -87,6 +87,11 @@ def create_photo(slug, title="Photo", description="Description", location="Locat
                                 large_image=mock_large_upload)
 
 
+def create_published_photos(num):
+    for x in range(num):
+        create_photo(slug="test-slug-" + str(x+1), published=True)
+
+
 class PhotoDetailViewTests(TestCase):
 
     def test_published_status(self):
