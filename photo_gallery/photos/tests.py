@@ -9,7 +9,7 @@ from imagekit.processors import ResizeToFit
 from pathlib import Path
 
 from .admin import PhotoAdmin
-from .models import Photo, validate_lowercase
+from .models import Collection, Photo, validate_lowercase
 
 
 def create_uploaded_file_object(image_path):
@@ -77,14 +77,21 @@ class PhotoAdminTests(TestCase):
 
 
 def create_photo(slug, title="Photo", description="Description", location="Location",
-                 date_taken=datetime.date(2022, 1, 1), featured=False, published=True):
+                 date_taken=datetime.date(2022, 1, 1), featured=False, published=True,
+                 collections=None):
 
     large_img_path = Path(__file__).resolve().parent / 'test_images/2500x1500.jpg'
     mock_large_upload = create_uploaded_file_object(large_img_path)
 
-    return Photo.objects.create(slug=slug, title=title, description=description, location=location,
-                                date_taken=date_taken, featured=featured, published=published,
-                                large_image=mock_large_upload)
+    photo = Photo.objects.create(slug=slug, title=title, description=description, location=location,
+                                 date_taken=date_taken, featured=featured, published=published,
+                                 large_image=mock_large_upload)
+
+    if collections is not None:
+        photo.collections.set(collections)
+        photo.save()
+
+    return photo
 
 
 def create_published_photos(num):
