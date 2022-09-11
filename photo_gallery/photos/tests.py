@@ -115,9 +115,9 @@ class PhotoDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
-class HomepageViewTests(TestCase):
+class PhotoListViewTests(TestCase):
 
-    def test_qs_unpublished_filtering(self):
+    def test_homepage_qs_unpublished_filtering(self):
         """Test that only `published` Photos are included in the queryset."""
         published_photo = create_photo(slug="published-photo", published=True)
         create_photo(slug="unpublished-photo", published=False)

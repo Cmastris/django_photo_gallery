@@ -2,7 +2,7 @@ from django.views.generic import DetailView, ListView
 from .models import Photo
 
 
-class HomepageView(ListView):
+class PhotoListView(ListView):
     model = Photo
     # Exclude unpublished photos from photo list
     # Order by featured (featured at start) then by descending date (most recent earlier)

@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.defaults import page_not_found
 
-from photos.views import HomepageView, PhotoDetailView
+from photos.views import PhotoDetailView, PhotoListView
 
 
 def custom_404_template(request):
@@ -27,7 +27,7 @@ def custom_404_template(request):
 
 
 urlpatterns = [
-    path('', HomepageView.as_view(), name='homepage'),
+    path('', PhotoListView.as_view(), name='homepage'),
     path('admin/', admin.site.urls),
     path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
     path('404', custom_404_template),
