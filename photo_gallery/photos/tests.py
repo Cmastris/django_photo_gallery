@@ -124,13 +124,60 @@ class PhotoDetailViewTests(TestCase):
 
 class PhotoListViewTests(TestCase):
 
+    def test_published_collection_status(self):
+        """Test that a published Collection returns a 200 status code."""
+        col = Collection.objects.create(name="Published Col", slug="test-col", published=True)
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_unpublished_collection_status(self):
+        """Test that an unpublished Collection returns a 404 status code."""
+        col = Collection.objects.create(name="Unpublished Col", slug="test-col", published=False)
+        create_photo(slug="published-photo", published=True, collections=[col])
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_404_collection_status(self):
+        """Test that a slug without an associated Collection returns a 404 status code."""
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": "404-slug"}))
+        self.assertEqual(response.status_code, 404)
+
     def test_homepage_qs_unpublished_filtering(self):
-        """Test that only `published` Photos are included in the queryset."""
+        """Test that only `published` Photos are included in the homepage queryset."""
         published_photo = create_photo(slug="published-photo", published=True)
         create_photo(slug="unpublished-photo", published=False)
 
         response = self.client.get(reverse("homepage"))
         self.assertQuerysetEqual(response.context['photo_list'], [published_photo])
+
+    def test_collection_qs_unpublished_filtering(self):
+        """Test that only `published` Photos are included in the collection queryset."""
+        col = Collection.objects.create(name="Test Col", slug="test-col", published=True)
+        published_photo = create_photo(slug="published-photo", published=True, collections=[col])
+        create_photo(slug="unpublished-photo", published=False, collections=[col])
+
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
+        self.assertQuerysetEqual(response.context['photo_list'], [published_photo])
+
+    def test_collection_qs_collection_filtering(self):
+        """Test that only Photos in a collection are included in the collection queryset."""
+        col1 = Collection.objects.create(name="Col 1", slug="col-1", published=True)
+        col2 = Collection.objects.create(name="Col 2", slug="col-2", published=True)
+        photo1 = create_photo(slug="photo-1", published=True, collections=[col1])
+        create_photo(slug="photo-2", published=True, collections=None)
+        create_photo(slug="photo-3", published=True, collections=[col2])
+
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col1.slug}))
+        self.assertQuerysetEqual(response.context['photo_list'], [photo1])
+
+    def test_collection_qs_multiple_collection_filtering(self):
+        """Test that Photos with multiple collections are included in the collection queryset."""
+        col1 = Collection.objects.create(name="Col 1", slug="col-1", published=True)
+        col2 = Collection.objects.create(name="Col 2", slug="col-2", published=True)
+        photo = create_photo(slug="photo-1", published=True, collections=[col2, col1])
+
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col1.slug}))
+        self.assertQuerysetEqual(response.context['photo_list'], [photo])
 
     def test_qs_featured_ordering(self):
         """Test that `featured` Photos are ordered first in the queryset."""

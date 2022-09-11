@@ -27,9 +27,10 @@ def custom_404_template(request):
 
 
 urlpatterns = [
-    path('', PhotoListView.as_view(), name='homepage'),
+    path('', PhotoListView.as_view(homepage=True), name='homepage'),
     path('admin/', admin.site.urls),
     path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
     path('404', custom_404_template),
+    path('<slug:collection_slug>', PhotoListView.as_view(), name='collection')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/#serving-files-uploaded-by-a-user-during-development
