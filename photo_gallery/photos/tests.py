@@ -101,21 +101,21 @@ def create_published_photos(num):
 
 class PhotoDetailViewTests(TestCase):
 
-    def test_published_status(self):
+    def test_published_photo_status(self):
         """Test that a published Photo returns a 200 status code."""
         test_slug = "published-photo"
         create_photo(slug=test_slug, published=True)
         response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
         self.assertEqual(response.status_code, 200)
 
-    def test_unpublished_status(self):
+    def test_unpublished_photo_status(self):
         """Test that an unpublished Photo returns a 404 status code."""
         test_slug = "unpublished-photo"
         create_photo(slug=test_slug, published=False)
         response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
         self.assertEqual(response.status_code, 404)
 
-    def test_404_status(self):
+    def test_404_photo_status(self):
         """Test that a slug without an associated Photo returns a 404 status code."""
         test_slug = "404-slug"
         response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
