@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, validate_slug
 from django.db import models
+from django.urls import reverse
 from django.utils.html import mark_safe
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFit
@@ -30,6 +31,9 @@ class Collection(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("collection", kwargs={"collection_slug": self.slug})
 
     class Meta:
         ordering = ['name']
