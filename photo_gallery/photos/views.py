@@ -21,7 +21,12 @@ class PhotoListView(ListView):
         # Order by featured (featured at start) then by descending date (most recent earlier)
         return filtered_qs.order_by('-featured', '-date_taken')
 
-    # TODO: add collection context data
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not self.homepage:
+            context['collection'] = get_object_or_404(Collection,
+                                                      slug=self.kwargs['collection_slug'])
+        return context
 
 
 class PhotoDetailView(DetailView):
