@@ -105,3 +105,6 @@ class Photo(models.Model):
 
     def __str__(self):
         return "{} ({})".format(self.title, self.slug)
+
+    def get_absolute_url(self):
+        return reverse("photo_detail", kwargs={"slug": self.slug})
