@@ -26,6 +26,7 @@ class PhotoListView(ListView):
         if not self.homepage:
             context['collection'] = get_object_or_404(Collection,
                                                       slug=self.kwargs['collection_slug'])
+        context['homepage'] = self.homepage
         return context
 
 
