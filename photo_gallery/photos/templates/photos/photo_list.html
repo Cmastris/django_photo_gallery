@@ -1,6 +1,20 @@
 {% extends "base.html" %}
+{% block title %}
+<title>{% if homepage %}Photo Gallery{% else %}{{ collection.name }}{% endif %} | Chris Mastris</title>
+{% endblock %}
 {% block content %}
-<div class="container text-center">
-  <h1>Photography by Chris Mastris</h1>
+<div class="container-lg text-center">
+  {% if homepage %}
+  <div class="mb-5">
+    <h1>Photography by Chris Mastris</h1>
+  </div>
+  {% else %}
+  <h1>{{ collection.name }}</h1>
+  <div class="row justify-content-lg-center mt-3">
+    <div class="col-lg-9">
+      <p>{{ collection.description }}</p>
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
