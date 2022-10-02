@@ -16,5 +16,33 @@
     </div>
   </div>
   {% endif %}
+  
+  {# Photo listings #}
+  <div class="mt-4 mb-5">
+    
+    <div class="row justify-content-lg-center">
+      {% for photo in photo_list %}
+      <div class="col-lg-5 my-3 my-lg-4 gx-3 mx-lg-3 mx-xxl-5 justify-content-center d-flex">
+        <div class="border bg-light">
+          <a href="{{ photo.get_absolute_url }}">
+            <img src="{{ photo.small_image.url }}"
+                 alt="{{ photo.title }}"
+                 class="img-fluid border-bottom border-success border-4">
+          </a>
+          <p class="pt-4 pb-2 px-3">
+            <a class="h5 text-dark text-decoration-none" href="{{ photo.get_absolute_url }}">
+              {{ photo.title }}
+            </a>
+          </p>
+        </div>
+      </div>
+    {% if forloop.counter == 2 or forloop.counter == 4 %} {# 2 photos per row #}
+    </div>
+
+    <div class="row justify-content-lg-center">
+    {% endif %}{% endfor %}
+    </div>
+  
+  </div>
 </div>
 {% endblock %}
