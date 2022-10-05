@@ -44,5 +44,40 @@
     </div>
   
   </div>
+
+  {# Pagination #}
+  {% if page_obj.paginator.num_pages > 1 %}
+  <div class="row justify-content-center d-flex align-items-center mb-5">
+    <div class="col-5 text-end fs-4">
+      <span class="px-3 px-md-5">
+      {% if page_obj.has_previous %}
+        <a class="link-secondary" href="?page=1">&laquo; 1</a>
+      {% endif %}
+      </span>
+      <span class="px-3 px-md-5">
+      {% if page_obj.previous_page_number != 1 %}
+        <a class="link-secondary" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+      {% endif %}
+      </span>
+    </div>
+
+    <div class="col-2 text-center">
+      <span class="h1">{{ page_obj.number }}</span>
+    </div>
+
+    <div class="col-5 text-start fs-4">
+      <span class="px-3 px-md-5">
+      {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+        <a class="link-secondary" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+      {% endif %}
+      </span>
+      <span class="px-3 px-md-5">
+      {% if page_obj.has_next %}
+        <a class="link-secondary" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }} &raquo;</a>
+      {% endif %}
+      </span>
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
