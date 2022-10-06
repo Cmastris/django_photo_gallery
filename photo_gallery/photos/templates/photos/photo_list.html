@@ -27,8 +27,15 @@
           <a href="{{ photo.get_absolute_url }}">
             <img src="{{ photo.small_image.url }}"
                  alt="{{ photo.title }}"
-                 class="img-fluid border-bottom border-success border-4">
+                 class="img-fluid">
           </a>
+          {% if photo.featured %}
+          <div class="py-1 px-3 bg-success border-top border-bottom border-dark border-1">
+            <p class="my-0 text-end text-uppercase h6 text-white">Featured</p>
+          </div>
+          {% else %}
+          <div class="border-bottom border-success border-4"></div>
+          {% endif %}
           <p class="pt-4 pb-2 px-3">
             <a class="h5 text-dark text-decoration-none" href="{{ photo.get_absolute_url }}">
               {{ photo.title }}
