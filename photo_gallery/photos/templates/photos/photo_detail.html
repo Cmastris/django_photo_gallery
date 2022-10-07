@@ -21,6 +21,21 @@
   <div class="row justify-content-lg-center">
     <div class="col-lg-9">
       <p>{{ photo.description }}</p>
+      {% if photo.collections.all|length > 0 %}
+      <div class="row justify-content-md-center py-4 gx-2 lh-lg">
+        <div class="col-md-auto">
+          <span class="fw-bold fst-italic">Collections:</span>
+        </div>
+        <div class="col-md-auto">
+          {% for collection in photo.collections.all %}
+          <span class="px-1">
+            <a class="link-success" href="{{ collection.get_absolute_url }}">{{ collection.name }}</a>
+          </span>
+          {% if not forloop.last %}<span>|</span>{% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
