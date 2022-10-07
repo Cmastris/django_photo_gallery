@@ -9,13 +9,15 @@
        class="img-fluid border border-4 rounded-3" alt="{{ photo.title }}">
 </div>
 <div class="container-lg text-center">  
-  <h1 class="h2 mt-3">{{ photo.title }}</h1>
-  <p>
-    <div class="row justify-content-md-center gy-1 text-muted">
-      <div class="col-md-auto"><i class="bi bi-geo-alt"></i> {{ photo.location }}</div>
-      <div class="col-md-auto"><i class="bi bi-calendar-event"></i> {{ photo.date_taken|date:"F Y" }}</div>
+  <h1 class="h2 pt-4">{{ photo.title }}</h1>
+  <div class="row justify-content-md-center pt-3 pb-4 gy-2 mb-lg-3 text-muted">
+    <div class="col-md-auto px-5">
+      <i class="bi bi-geo-alt"></i> {{ photo.location }}
     </div>
-  </p>
+    <div class="col-md-auto px-5">
+      <i class="bi bi-calendar-event px-1"></i> {{ photo.date_taken|date:"F Y" }}
+    </div>
+  </div>
   <div class="row justify-content-lg-center">
     <div class="col-lg-9">
       <p>{{ photo.description }}</p>
