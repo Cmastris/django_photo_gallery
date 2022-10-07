@@ -36,11 +36,14 @@
           {% else %}
           <div class="border-bottom border-success border-4"></div>
           {% endif %}
-          <p class="pt-4 pb-2 px-3">
+          <p class="pt-4 pb-0 px-3">
             <a class="h5 text-dark text-decoration-none" href="{{ photo.get_absolute_url }}">
               {{ photo.title }}
             </a>
           </p>
+          <div class="pb-3 text-success">
+            <i class="bi bi-calendar-event px-1"></i> {{ photo.date_taken|date:"F Y" }}
+          </div>
         </div>
       </div>
     {% if forloop.counter == 2 or forloop.counter == 4 %} {# 2 photos per row #}
