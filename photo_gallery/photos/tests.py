@@ -2,7 +2,7 @@ import datetime
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, tag, TestCase
 from django.urls import reverse
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
@@ -33,6 +33,7 @@ class MockPhotoImages(models.Model):
                                    format='JPEG')
 
 
+@tag('models')
 class PhotoModelTests(TestCase):
 
     def test_image_downsizing(self):
@@ -56,6 +57,7 @@ class MockPhotoAdmin(PhotoAdmin):
         pass
 
 
+@tag('admin')
 class PhotoAdminTests(TestCase):
 
     request = RequestFactory()
@@ -99,6 +101,7 @@ def create_published_photos(num):
         create_photo(slug="test-slug-" + str(x+1), published=True)
 
 
+@tag('views', 'photo_detail')
 class PhotoDetailViewTests(TestCase):
 
     def test_published_photo_status(self):
@@ -162,6 +165,7 @@ class PhotoDetailViewTests(TestCase):
         self.assertNotContains(response, "Collections:")
 
 
+@tag('views', 'photo_list')
 class PhotoListViewTests(TestCase):
 
     def test_published_collection_status(self):
@@ -265,6 +269,7 @@ class PhotoListViewTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+@tag('validators')
 class ValidatorTests(TestCase):
     def test_lowercase_validates(self):
         """Test that `validate_lowercase()` doesn't incorrectly raise a ValidationError"""
