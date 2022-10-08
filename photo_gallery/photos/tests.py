@@ -254,6 +254,32 @@ class PhotoListViewTests(TestCase):
         expected_qs = [p_featured_new, p_featured_old, p_unfeatured_new, p_unfeatured_old]
         self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
 
+    def test_qs_new_ordering(self):
+        """Test that Photos are ordered by descending `date_taken` with the `new` query string"""
+        old_date = datetime.date(2020, 1, 1)
+        mid_date = datetime.date(2021, 1, 1)
+        new_date = datetime.date(2022, 1, 1)
+        p_unfeatured_old = create_photo(slug="unfeatured-old", featured=False, date_taken=old_date)
+        p_unfeatured_new = create_photo(slug="unfeatured-new", featured=False, date_taken=new_date)
+        p_featured_mid = create_photo(slug="featured-mid", featured=True, date_taken=mid_date)
+
+        response = self.client.get(reverse("homepage") + "?sort=new")
+        expected_qs = [p_unfeatured_new, p_featured_mid, p_unfeatured_old]
+        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+
+    def test_qs_old_ordering(self):
+        """Test that Photos are ordered by ascending `date_taken` with the `old` query string"""
+        old_date = datetime.date(2020, 1, 1)
+        mid_date = datetime.date(2021, 1, 1)
+        new_date = datetime.date(2022, 1, 1)
+        p_featured_mid = create_photo(slug="featured-mid", featured=True, date_taken=mid_date)
+        p_unfeatured_new = create_photo(slug="unfeatured-new", featured=False, date_taken=new_date)
+        p_unfeatured_old = create_photo(slug="unfeatured-old", featured=False, date_taken=old_date)
+
+        response = self.client.get(reverse("homepage") + "?sort=old")
+        expected_qs = [p_unfeatured_old, p_featured_mid, p_unfeatured_new]
+        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+
     def test_paginated_200_status(self):
         """Test that a paginated URL with at least 1 associated Photo returns a 200 status code."""
         # `paginate_by = 6` (6 photos per page)

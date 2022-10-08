@@ -18,6 +18,16 @@ class PhotoListView(ListView):
                 raise Http404()
             filtered_qs = Photo.objects.filter(published=True, collections__in=[collection])
 
+        # Retrieve `sort` query string value, otherwise None
+        sort = self.request.GET.get('sort')
+        if sort == "new":
+            # Order by descending date (most recent earlier)
+            return filtered_qs.order_by('-date_taken')
+
+        elif sort == "old":
+            # Order by ascending date (oldest earlier)
+            return filtered_qs.order_by('date_taken')
+
         # Order by featured (featured at start) then by descending date (most recent earlier)
         return filtered_qs.order_by('-featured', '-date_taken')
 
@@ -27,6 +37,7 @@ class PhotoListView(ListView):
             context['collection'] = get_object_or_404(Collection,
                                                       slug=self.kwargs['collection_slug'])
         context['homepage'] = self.homepage
+        context['sorting'] = self.request.GET.get('sort', 'default')
         return context
 
 
