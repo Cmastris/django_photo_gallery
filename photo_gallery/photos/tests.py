@@ -268,6 +268,31 @@ class PhotoListViewTests(TestCase):
         response = self.client.get(reverse("homepage"), {"page": 2})
         self.assertEqual(response.status_code, 404)
 
+    def test_collection_name_in_response(self):
+        """Test that a published collection response contains the collection name."""
+        test_name = "Collection Test Name"
+        col = Collection.objects.create(name=test_name, slug="test-collection", published=True)
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
+        self.assertContains(response, test_name)
+
+    def test_collection_description_in_response(self):
+        """Test that a published collection response contains the collection description."""
+        test_description = "This is a test description."
+        col = Collection.objects.create(name="Test Name",
+                                        description=test_description,
+                                        slug="test-col",
+                                        published=True)
+
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
+        self.assertContains(response, test_description)
+
+    def test_photo_link_in_response(self):
+        """Test that a published collection response contains an associated photo URL."""
+        col = Collection.objects.create(name="Published Col", slug="test-col", published=True)
+        photo = create_photo(slug="test-photo-slug", published=True, collections=[col])
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
+        self.assertContains(response, photo.get_absolute_url())
+
 
 @tag('validators')
 class ValidatorTests(TestCase):
