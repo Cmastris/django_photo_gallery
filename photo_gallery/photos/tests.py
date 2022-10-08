@@ -121,6 +121,46 @@ class PhotoDetailViewTests(TestCase):
         response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
         self.assertEqual(response.status_code, 404)
 
+    def test_photo_image_in_response(self):
+        """Test that a published photo response contains the photo image URLs."""
+        test_slug = "image-test"
+        photo = create_photo(slug=test_slug, published=True)
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertContains(response, photo.large_image.url)
+        self.assertContains(response, photo.small_image.url)
+
+    def test_photo_title_in_response(self):
+        """Test that a published photo response contains the photo title."""
+        test_slug = "title-test"
+        test_title = "Test Title"
+        create_photo(slug=test_slug, title=test_title, published=True)
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertContains(response, test_title)
+
+    def test_photo_description_in_response(self):
+        """Test that a published photo response contains the photo description."""
+        test_slug = "description-test"
+        test_description = "This is a test description."
+        create_photo(slug=test_slug, description=test_description, published=True)
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertContains(response, test_description)
+
+    def test_collections_in_response(self):
+        """Test that the response of a photo in >0 collections contains collections text."""
+        col = Collection.objects.create(name="Published Col", slug="test-col", published=True)
+        test_slug = "has-collections"
+        create_photo(slug=test_slug, published=True, collections=[col])
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertContains(response, "Collections:")
+
+    def test_collections_not_in_response(self):
+        """Test that the response of a photo in 0 collections doesn't contain collections text."""
+        Collection.objects.create(name="Published Col", slug="test-col", published=True)
+        test_slug = "no-collections"
+        create_photo(slug=test_slug, published=True, collections=None)
+        response = self.client.get(reverse("photo_detail", kwargs={"slug": test_slug}))
+        self.assertNotContains(response, "Collections:")
+
 
 class PhotoListViewTests(TestCase):
 
