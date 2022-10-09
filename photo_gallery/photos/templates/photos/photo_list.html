@@ -16,9 +16,43 @@
     </div>
   </div>
   {% endif %}
+
+  {# Sorting dropdown #}
+  <div class="row justify-content-lg-center pt-4 mt-4">
+    <div class="col-md-10">
+      <div class="dropdown text-end">
+        <button class="btn btn-success btn-sm p-2 dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Sort by...
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li>
+            {% if sorting == 'default' %}
+            <a class="dropdown-item active" href="#" aria-current="true">Featured (default)</a>
+            {% else %}
+            <a class="dropdown-item" href="{% if homepage %}/{% else %}{{ collection.get_absolute_url }}{% endif %}">Featured (default)</a>
+            {% endif %}
+          </li>
+          <li>
+            {% if sorting == 'new' %}
+            <a class="dropdown-item active" href="#" aria-current="true">Newest</a>
+            {% else %}
+            <a class="dropdown-item" href="?sort=new">Newest</a>
+            {% endif %}
+          </li>
+          <li>
+            {% if sorting == 'old' %}
+            <a class="dropdown-item active" href="#" aria-current="true">Oldest</a>
+            {% else %}
+            <a class="dropdown-item" href="?sort=old">Oldest</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
   
   {# Photo listings #}
-  <div class="mt-4 mb-5">
+  <div class="mt-1 mb-5">
     
     <div class="row justify-content-lg-center">
       {% for photo in photo_list %}
