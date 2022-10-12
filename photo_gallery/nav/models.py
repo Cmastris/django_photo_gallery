@@ -25,10 +25,11 @@ class NavSection(models.Model):
                                         help_text=section_order_guidelines)
 
     def __str__(self):
-        return "NavSection " + str(self.section_order)
+        return "Navigation Section " + str(self.section_order)
 
     class Meta:
         ordering = ['section_order']
+        verbose_name = "Navigation Section"
 
 
 class NavLink(models.Model):
@@ -62,3 +63,6 @@ class NavLink(models.Model):
 
     def __str__(self):
         return self.link_text
+
+    class Meta:
+        verbose_name = "Navigation Link"
