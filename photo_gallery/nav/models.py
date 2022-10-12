@@ -58,5 +58,7 @@ class NavLink(models.Model):
     vertical_order = models.IntegerField(choices=ORDER_CHOICES, blank=False, default=0,
                                          help_text=vertical_order_guidelines)
 
+    nav_section = models.ForeignKey(NavSection, on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return self.link_text
