@@ -1,6 +1,36 @@
 from django.db import models
 
 
+class NavSection(models.Model):
+    dropdown_label_guidelines = "Enter the clickable dropdown menu text, if applicable. " \
+                                "Otherwise, leave blank if the navigation menu section contains " \
+                                "only a single link rather than a dropdown menu."
+
+    dropdown_label = models.CharField(max_length=50, blank=True,
+                                      help_text=dropdown_label_guidelines)
+
+    section_order_guidelines = "Select the ordering of the navigation menu section, where '1st' " \
+                               "refers to the leftmost (desktop) or top (mobile) position."
+
+    ORDER_CHOICES = [
+        (1, '1st'),
+        (2, '2nd'),
+        (3, '3rd'),
+        (4, '4th'),
+        (5, '5th'),
+        (6, '6th'),
+    ]
+
+    section_order = models.IntegerField(choices=ORDER_CHOICES, blank=False, unique=True,
+                                        help_text=section_order_guidelines)
+
+    def __str__(self):
+        return "NavSection " + str(self.section_order)
+
+    class Meta:
+        ordering = ['section_order']
+
+
 class NavLink(models.Model):
     link_text_guidelines = "Enter the clickable link text (anchor text)."
     link_text = models.CharField(max_length=50, help_text=link_text_guidelines)
