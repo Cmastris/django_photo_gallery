@@ -9,8 +9,47 @@
 </head>
 <body>
   <header>
-    <nav>
-      <a href="/">Home</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 me-lg-4 h1">Photo Gallery</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mt-2 mt-lg-0">
+            {% for section in nav_sections %}
+            {# https://docs.djangoproject.com/en/4.0/topics/db/queries/#following-relationships-backward #}
+            {% if section.navlink_set.all|length > 1 %}
+            <li class="nav-item dropdown pb-1 pb-lg-0 px-lg-1">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarSection{{ forloop.counter }}DropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ section.dropdown_label }}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarSection{{ forloop.counter }}DropdownMenuLink">
+                {% for link in section.navlink_set.all|dictsort:"vertical_order" %}
+                {% if link.link_url == request.path %}
+                <li><a class="dropdown-item py-2 text-success" aria-current="page" href="{{ link.link_url }}">{{ link.link_text }}</a></li>
+                {% else %}
+                <li><a class="dropdown-item py-2" href="{{ link.link_url }}">{{ link.link_text }}</a></li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+            {% else %}{# NavSection with a single NavLink (no dropdown) #}
+            {% with link=section.navlink_set.all.0 %}
+            <li class="nav-item pb-1 pb-lg-0 px-lg-1">
+              {% if link.link_url == request.path %}
+              <a class="nav-link active" aria-current="page" href="{{ link.link_url }}">{{ link.link_text }}</a>
+              {% else %}
+              <a class="nav-link" href="{{ link.link_url }}">{{ link.link_text }}</a>
+              {% endif %}
+            </li>
+            {% endwith %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
     </nav>
   </header>
   <main>
