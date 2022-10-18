@@ -223,6 +223,21 @@ class PhotoListViewTests(TestCase):
         response = self.client.get(reverse("collection", kwargs={"collection_slug": col1.slug}))
         self.assertQuerysetEqual(response.context['photo_list'], [photo])
 
+    def test_qs_search_query_filtering(self):
+        """Test that only Photos that match a search criteria are included in the queryset."""
+        match1 = create_photo(slug="p1", title="TestSearch", description="desc", location="loc",
+                              date_taken=datetime.date(2022, 1, 1))
+        create_photo(slug="p2", title="title", description="desc", location="loc",
+                     date_taken=datetime.date(2021, 1, 1))
+        match2 = create_photo(slug="p3", title="title", description="testsearch", location="loc",
+                              date_taken=datetime.date(2020, 1, 1))
+        match3 = create_photo(slug="p4", title="title", description="desc", location="testsearch",
+                              date_taken=datetime.date(2019, 1, 1))
+
+        response = self.client.get(reverse("search") + "?query=testsearch")
+        expected_qs = [match1, match2, match3]
+        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+
     def test_qs_featured_ordering(self):
         """Test that `featured` Photos are ordered first in the queryset."""
         create_photo(slug="unfeatured1", featured=False)
