@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% block title %}
-<title>{% if homepage %}Photo Gallery{% else %}{{ collection.name }}{% endif %} | Chris Mastris</title>
+<title>
+  {% if homepage %}Photo Gallery{% elif is_collection %}{{ collection.name }}{% else %}Search Results{% endif %} | Chris Mastris
+</title>
 {% endblock %}
 {% block content %}
 <div class="container-lg text-center">
-  {% if homepage %}
+  {% if not is_collection %}
   <div class="mb-5">
-    <h1 class="display-4">Photography by Chris Mastris</h1>
+    <h1 class="display-4">
+      {% if homepage %}Photography by Chris Mastris{% else %}Search results: "{{ search_query }}"{% endif %}
+    </h1>
   </div>
   {% else %}
   <h1 class="display-4">{{ collection.name }}</h1>
@@ -18,6 +22,7 @@
   {% endif %}
 
   {# Sorting dropdown #}
+  {% if not is_search %}
   <div class="row justify-content-lg-center pt-4 mt-4">
     <div class="col-md-10">
       <div class="dropdown text-end">
@@ -50,6 +55,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
   
   {# Photo listings #}
   <div class="mt-1 mb-5">
