@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}
 <title>
-  {% if homepage %}Photo Gallery{% elif is_collection %}{{ collection.name }}{% else %}Search Results{% endif %} | Chris Mastris
+  {% if is_homepage %}Photo Gallery{% elif is_collection %}{{ collection.name }}{% else %}Search Results{% endif %} | Chris Mastris
 </title>
 {% endblock %}
 {% block content %}
@@ -9,7 +9,7 @@
   {% if not is_collection %}
   <div class="mb-5">
     <h1 class="display-4">
-      {% if homepage %}Photography by Chris Mastris{% else %}Search results: "{{ search_query }}"{% endif %}
+      {% if is_homepage %}Photography by Chris Mastris{% else %}Search results: "{{ search_query }}"{% endif %}
     </h1>
   </div>
   {% else %}
@@ -34,7 +34,7 @@
             {% if sorting == 'default' %}
             <a class="dropdown-item active" href="#" aria-current="true">Featured (default)</a>
             {% else %}
-            <a class="dropdown-item" href="{% if homepage %}/{% else %}{{ collection.get_absolute_url }}{% endif %}">Featured (default)</a>
+            <a class="dropdown-item" href="{% if is_homepage %}/{% else %}{{ collection.get_absolute_url }}{% endif %}">Featured (default)</a>
             {% endif %}
           </li>
           <li>

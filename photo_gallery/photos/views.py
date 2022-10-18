@@ -50,7 +50,7 @@ class PhotoListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['homepage'] = self.homepage
+        context['is_homepage'] = self.homepage
         context['is_collection'] = self.collection
         context['is_search'] = self.search
 
