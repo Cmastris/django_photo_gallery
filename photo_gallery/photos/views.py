@@ -12,7 +12,10 @@ class PhotoListView(ListView):
     collection = False
     search = False
 
-    def get_queryset(self):
+    def get_filtered_photos(self):
+        """Return a filtered Photo queryset, depending on the page type.
+        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
+        """
         if self.search:
             query = self.request.GET.get('query', None)
             if query:
@@ -21,19 +24,24 @@ class PhotoListView(ListView):
                          Q(description__icontains=query) | \
                          Q(location__icontains=query)
 
-                filtered_qs = Photo.objects.filter(lookup)
+                qs = Photo.objects.filter(lookup)
 
             else:
-                filtered_qs = Photo.objects.filter(published=True)
+                qs = Photo.objects.filter(published=True)
 
         elif self.homepage:
-            filtered_qs = Photo.objects.filter(published=True)
+            qs = Photo.objects.filter(published=True)
 
         else:
             collection = get_object_or_404(Collection, slug=self.kwargs['collection_slug'])
             if not collection.published:
                 raise Http404()
-            filtered_qs = Photo.objects.filter(published=True, collections__in=[collection])
+            qs = Photo.objects.filter(published=True, collections__in=[collection])
+
+        return qs
+
+    def get_queryset(self):
+        filtered_qs = self.get_filtered_photos()
 
         # Retrieve `sort` query string value, otherwise None
         sort = self.request.GET.get('sort')
