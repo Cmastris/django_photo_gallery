@@ -40,21 +40,29 @@ class PhotoListView(ListView):
 
         return qs
 
-    def get_queryset(self):
-        filtered_qs = self.get_filtered_photos()
+    def get_sorted_photos(self, qs):
+        """Sort and return a Photo queryset depending on the `sort` query string (if applicable).
+        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
 
+        Args:
+            qs (QuerySet): the (filtered) QuerySet to be sorted.
+        """
         # Retrieve `sort` query string value, otherwise None
         sort = self.request.GET.get('sort')
         if sort == "new":
             # Order by descending date (most recent earlier)
-            return filtered_qs.order_by('-date_taken')
+            return qs.order_by('-date_taken')
 
         elif sort == "old":
             # Order by ascending date (oldest earlier)
-            return filtered_qs.order_by('date_taken')
+            return qs.order_by('date_taken')
 
         # Order by featured (featured at start) then by descending date (most recent earlier)
-        return filtered_qs.order_by('-featured', '-date_taken')
+        return qs.order_by('-featured', '-date_taken')
+
+    def get_queryset(self):
+        filtered_qs = self.get_filtered_photos()
+        return self.get_sorted_photos(filtered_qs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
