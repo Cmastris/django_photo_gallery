@@ -16,29 +16,13 @@ class PhotoListView(ListView):
         """Return a filtered Photo queryset, depending on the page type.
         https://docs.djangoproject.com/en/4.0/ref/models/querysets/
         """
-        if self.search:
-            query = self.request.GET.get('query', None)
-            if query:
-                # https://docs.djangoproject.com/en/4.0/topics/db/queries/#complex-lookups-with-q-objects
-                lookup = Q(title__icontains=query) | \
-                         Q(description__icontains=query) | \
-                         Q(location__icontains=query)
-
-                qs = Photo.objects.filter(lookup)
-
-            else:
-                qs = Photo.objects.filter(published=True)
-
-        elif self.homepage:
-            qs = Photo.objects.filter(published=True)
-
+        if self.homepage:
+            return Photo.objects.filter(published=True)
         else:
             collection = get_object_or_404(Collection, slug=self.kwargs['collection_slug'])
             if not collection.published:
                 raise Http404()
-            qs = Photo.objects.filter(published=True, collections__in=[collection])
-
-        return qs
+            return Photo.objects.filter(published=True, collections__in=[collection])
 
     def get_sorted_photos(self, qs):
         """Sort and return a Photo queryset depending on the `sort` query string (if applicable).
@@ -69,16 +53,36 @@ class PhotoListView(ListView):
         context['is_homepage'] = self.homepage
         context['is_collection'] = self.collection
         context['is_search'] = self.search
-
-        if self.search:
-            context['search_query'] = self.request.GET.get('query', '')
-            return context
+        context['sorting'] = self.request.GET.get('sort', 'default')
 
         if self.collection:
             context['collection'] = get_object_or_404(Collection,
                                                       slug=self.kwargs['collection_slug'])
 
-        context['sorting'] = self.request.GET.get('sort', 'default')
+        return context
+
+
+class SearchView(PhotoListView):
+    search = True
+
+    def get_filtered_photos(self):
+        """Return a filtered queryset of Photos whose primary content includes the search query.
+        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
+        """
+        query = self.request.GET.get('query', None)
+        if query is not None:
+            # https://docs.djangoproject.com/en/4.0/topics/db/queries/#complex-lookups-with-q-objects
+            lookup = Q(title__icontains=query) | \
+                     Q(description__icontains=query) | \
+                     Q(location__icontains=query)
+
+            return Photo.objects.filter(lookup)
+
+        return Photo.objects.filter(published=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_query'] = self.request.GET.get('query', '')
         return context
 
 
