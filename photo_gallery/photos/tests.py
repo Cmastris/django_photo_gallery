@@ -339,6 +339,17 @@ class SearchViewTests(TestCase):
         expected_qs = [match1, match2, match3]
         self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
 
+    def test_200_status(self):
+        """Test that a request with a non-empty query returns a 200 status."""
+        response = self.client.get(reverse("search") + "?query=testsearch")
+        self.assertEqual(response.status_code, 200)
+
+    def test_empty_query_redirect(self):
+        """Test that a request with an empty query redirects to the homepage."""
+        response = self.client.get(reverse("search"))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("homepage"))
+
 
 @tag('validators')
 class ValidatorTests(TestCase):

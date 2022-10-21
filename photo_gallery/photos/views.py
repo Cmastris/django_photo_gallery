@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView
 from .models import Collection, Photo
 
@@ -92,6 +92,13 @@ class SearchView(PhotoListView):
         context = super().get_context_data(**kwargs)
         context['search_query'] = self.request.GET.get('query', '')
         return context
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('query', None)
+        if query is None:
+            return redirect('homepage')
+
+        return super().get(request, *args, **kwargs)
 
 
 class PhotoDetailView(DetailView):
