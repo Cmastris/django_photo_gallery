@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.defaults import page_not_found
 
-from photos.views import PhotoDetailView, PhotoListView, SearchView
+from photos.views import CollectionView, PhotoDetailView, PhotoListView, SearchView
 
 
 def custom_404_template(request):
@@ -32,6 +32,6 @@ urlpatterns = [
     path('search', SearchView.as_view(), name='search'),
     path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
     path('404', custom_404_template),
-    path('<slug:collection_slug>', PhotoListView.as_view(collection=True), name='collection'),
+    path('<slug:collection_slug>', CollectionView.as_view(), name='collection'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/#serving-files-uploaded-by-a-user-during-development

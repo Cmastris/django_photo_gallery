@@ -13,16 +13,10 @@ class PhotoListView(ListView):
     search = False
 
     def get_filtered_photos(self):
-        """Return a filtered Photo queryset, depending on the page type.
+        """Return a filtered queryset of Photos that are published.
         https://docs.djangoproject.com/en/4.0/ref/models/querysets/
         """
-        if self.homepage:
-            return Photo.objects.filter(published=True)
-        else:
-            collection = get_object_or_404(Collection, slug=self.kwargs['collection_slug'])
-            if not collection.published:
-                raise Http404()
-            return Photo.objects.filter(published=True, collections__in=[collection])
+        return Photo.objects.filter(published=True)
 
     def get_sorted_photos(self, qs):
         """Sort and return a Photo queryset depending on the `sort` query string (if applicable).
@@ -54,11 +48,25 @@ class PhotoListView(ListView):
         context['is_collection'] = self.collection
         context['is_search'] = self.search
         context['sorting'] = self.request.GET.get('sort', 'default')
+        return context
 
-        if self.collection:
-            context['collection'] = get_object_or_404(Collection,
-                                                      slug=self.kwargs['collection_slug'])
 
+class CollectionView(PhotoListView):
+    collection = True
+
+    def get_filtered_photos(self):
+        """Return a filtered queryset of Photos that are in the collection.
+        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
+        """
+        collection = get_object_or_404(Collection, slug=self.kwargs['collection_slug'])
+        if not collection.published:
+            raise Http404()
+
+        return Photo.objects.filter(published=True, collections__in=[collection])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['collection'] = get_object_or_404(Collection, slug=self.kwargs['collection_slug'])
         return context
 
 
