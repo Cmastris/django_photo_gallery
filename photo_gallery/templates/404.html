@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container text-center mt-5 mb-5">
-  <h1 class="mb-4">404 (Not Found)</h1>
-  <p class="h6">Sorry, the requested URL ({{ request.get_full_path }}) can't be found.</p>
+  <h1 class="display-4 mb-5">404 (Not Found)</h1>
+  <p class="fs-5 pb-4">Sorry, the requested URL ({{ request.get_full_path }}) can't be found.</p>
+  <p class="pb-5">Can't find what you're looking for? Feel free to <a class="link-success" href="/contact">get in touch.</a></p>
 </div>
 {% endblock %}
