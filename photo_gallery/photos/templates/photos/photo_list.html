@@ -21,6 +21,12 @@
   </div>
   {% endif %}
 
+  {% if photo_list|length == 0 %}
+  {# Display error message instead of sorting dropdown and listings #}
+  <div class="my-5 py-5">
+    <p class="fs-5 py-4">Sorry, no photos were found.</p>
+  </div>
+  {% else %}
   {# Sorting dropdown #}
   {% if not is_search %}
   <div class="row justify-content-lg-center pt-4 mt-4">
@@ -94,6 +100,7 @@
     </div>
   
   </div>
+  {% endif %}{# End of `photo_list|length == 0` conditional block #}
 
   {# Pagination #}
   {% if page_obj.paginator.num_pages > 1 %}

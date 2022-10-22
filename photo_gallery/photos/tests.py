@@ -321,6 +321,12 @@ class CollectionViewTests(TestCase):
         response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
         self.assertContains(response, photo.get_absolute_url())
 
+    def test_empty_qs_error_message(self):
+        """Test that a response with an empty queryset includes an error message."""
+        col = Collection.objects.create(name="Empty Col", slug="empty-col", published=True)
+        response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
+        self.assertContains(response, "no photos were found")
+
 
 @tag('views', 'search')
 class SearchViewTests(TestCase):
@@ -349,6 +355,11 @@ class SearchViewTests(TestCase):
         response = self.client.get(reverse("search"))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse("homepage"))
+
+    def test_empty_qs_error_message(self):
+        """Test that a response with an empty queryset includes an error message."""
+        response = self.client.get(reverse("search") + "?query=testsearch")
+        self.assertContains(response, "no photos were found")
 
 
 @tag('validators')
