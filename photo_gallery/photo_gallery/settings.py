@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'imagekit',
+    'contact.apps.ContactConfig',
     'nav.apps.NavConfig',
     'photos.apps.PhotosConfig',
     'django.contrib.admin',
