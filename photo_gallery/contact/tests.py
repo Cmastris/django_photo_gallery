@@ -1,3 +1,10 @@
-from django.test import TestCase
+from django.test import tag, TestCase
+from django.urls import reverse
 
-# Create your tests here.
+
+@tag('views', 'contact')
+class TestContactSuccessView(TestCase):
+    def test_200_status(self):
+        """Test that a request returns a 200 status."""
+        response = self.client.get(reverse("contact_success"))
+        self.assertEqual(response.status_code, 200)
