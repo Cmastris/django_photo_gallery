@@ -1,1 +1,18 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block content %}
+<div class="container text-center pb-5">
+  <h1 class="display-4 pb-2 mb-5">Get in touch</h1>
+  <div class="row justify-content-center text-start">
+    <div class="col-lg-7">
+      <form action="{% url 'contact' %}" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="text-center">
+          <button class="btn btn-outline-success mt-3" type="submit">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
