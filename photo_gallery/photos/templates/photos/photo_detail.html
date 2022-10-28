@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block title %}<title>{{ photo.title }} | Chris Mastris</title>{% endblock %}
+{% block meta_description %}
+<meta name="description" content="View the photo titled '{{ photo.title }}'. Location: {{ photo.location }}. Date taken: {{ photo.date_taken|date:"F Y" }}.">
+{% endblock %}
 {% block content %}
 <div class="container-lg text-center">
   <img srcset="{{ photo.small_image.url }} 500w,

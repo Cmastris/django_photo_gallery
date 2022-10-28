@@ -4,6 +4,9 @@
   {% if is_homepage %}Photo Gallery{% elif is_collection %}{{ collection.name }}{% else %}Search Results{% endif %} | Chris Mastris
 </title>
 {% endblock %}
+{% block meta_description %}
+<meta name="description" content="{% if is_collection %}{{ collection.description }}{% else %}A Django photo gallery website by Chris Mastris.{% endif %}">
+{% endblock %}
 {% block content %}
 <div class="container-lg text-center">
   {% if not is_collection %}
