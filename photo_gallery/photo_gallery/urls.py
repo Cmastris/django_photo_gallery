@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.defaults import page_not_found
 
-from contact.views import ContactSuccessView
+from contact.views import ContactMessageCreateView, ContactSuccessView
 from photos.views import CollectionView, PhotoDetailView, PhotoListView, SearchView
 
 
@@ -30,6 +30,7 @@ def custom_404_template(request):
 urlpatterns = [
     path('', PhotoListView.as_view(homepage=True), name='homepage'),
     path('admin/', admin.site.urls),
+    path('contact', ContactMessageCreateView.as_view(), name='contact'),
     path('contact-success', ContactSuccessView.as_view(), name='contact_success'),
     path('search', SearchView.as_view(), name='search'),
     path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
