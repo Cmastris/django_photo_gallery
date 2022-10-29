@@ -4,6 +4,10 @@
   {% if is_homepage %}Photo Gallery{% elif is_collection %}{{ collection.name }}{% else %}Search Results{% endif %} | Chris Mastris
 </title>
 {% endblock %}
+{% block canonical %}
+{# Include page query string if present and >1 (1 is duplicate); other queries excluded #}
+<link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">
+{% endblock %}
 {% block meta_description %}
 <meta name="description" content="{% if is_collection %}{{ collection.description }}{% else %}A Django photo gallery website by Chris Mastris.{% endif %}">
 {% endblock %}
