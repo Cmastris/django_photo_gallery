@@ -3,6 +3,11 @@
 <title>{{ photo.title }} | Chris Mastris</title>
 <link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}">
 <meta name="description" content="View the photo titled '{{ photo.title }}'. Location: {{ photo.location }}. Date taken: {{ photo.date_taken|date:"F Y" }}.">
+<meta property="og:url" content="{{ absolute_root_url }}{{ request.path }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ photo.title }}">
+<meta property="og:description" content="View the photo titled '{{ photo.title }}'. Location: {{ photo.location }}. Date taken: {{ photo.date_taken|date:"F Y" }}.">
+<meta property="og:image" content="{{ absolute_root_url }}{{ photo.large_image.url }}">
 {% endblock %}
 
 {% block content %}
