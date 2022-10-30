@@ -1,5 +1,10 @@
 {% extends "base.html" %}
+{% block head_content_tags %}
+<title>Contact Message Sent | Chris Mastris</title>
+<link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}">
+{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
+
 {% block content %}
 <div class="container text-center pb-5 my-5">
   <h1 class="display-4 py-5">Thank you</h1>

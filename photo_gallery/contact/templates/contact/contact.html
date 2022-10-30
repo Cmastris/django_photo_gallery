@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
+{% block head_content_tags %}
+<title>Contact | Chris Mastris</title>
+<link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}">
+<meta name="description" content="Get in touch.">
+{% endblock %}
+
 {% block content %}
 <div class="container text-center pb-5">
   <h1 class="display-4 pb-2 mb-5">Get in touch</h1>
