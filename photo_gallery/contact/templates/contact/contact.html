@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
+
 {% block head_content_tags %}
-<title>Contact | Chris Mastris</title>
+{% with title="Contact" description="Get in touch." %}
+<title>{{ title }} | Chris Mastris</title>
 <link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}">
-<meta name="description" content="Get in touch.">
+<meta name="description" content="{{ description }}">
+<meta property="og:url" content="{{ absolute_root_url }}{{ request.path }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+{% endwith %}
 {% endblock %}
 
 {% block content %}
