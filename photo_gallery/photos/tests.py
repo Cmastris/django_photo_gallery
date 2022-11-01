@@ -2,12 +2,13 @@ import datetime
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
-from django.test import RequestFactory, tag, TestCase
+from django.test import override_settings, RequestFactory, tag, TestCase
 from django.urls import reverse
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from pathlib import Path
 
+from photo_gallery.settings import BASE_DIR
 from .admin import PhotoAdmin
 from .models import Collection, Photo, validate_lowercase
 
@@ -33,51 +34,6 @@ class MockPhotoImages(models.Model):
                                    format='JPEG')
 
 
-@tag('models')
-class PhotoModelTests(TestCase):
-
-    def test_image_downsizing(self):
-        """Test that ImageSpecField downsizes a mock upload image to a width of 500px."""
-        photo = MockPhotoImages()
-        self.assertEqual(photo.downsized_image.width, 500)
-
-    def test_image_upsizing(self):
-        """Test that ImageSpecField upsizes a mock upload image to a width of 500px."""
-        photo = MockPhotoImages()
-        self.assertEqual(photo.upsized_image.width, 500)
-
-    def test_photo_str(self):
-        """Test the Photo __str__ method."""
-        photo = create_photo(title="Test Title", slug="test-slug")
-        self.assertEqual(photo.__str__(), "Test Title (test-slug)")
-
-
-class MockPhotoAdmin(PhotoAdmin):
-    def __init__(self):
-        pass
-
-
-@tag('admin')
-class PhotoAdminTests(TestCase):
-
-    request = RequestFactory()
-
-    def test_get_fields_add(self):
-        """Test that `thumbnail_img_tag` is excluded from add view `fields`"""
-        photo_admin = MockPhotoAdmin()
-        fields = photo_admin.get_fields(self.request)
-        self.assertEqual(fields, ['large_image', 'title', 'slug', 'description', 'location',
-                                  'country', 'date_taken', 'collections', 'featured', 'published'])
-
-    def test_get_fields_change(self):
-        """Test that `thumbnail_img_tag` is included in change view `fields`"""
-        photo_admin = MockPhotoAdmin()
-        fields = photo_admin.get_fields(self.request, obj=MockPhotoImages())
-        self.assertEqual(fields, ['large_image', 'thumbnail_img_tag', 'title', 'slug',
-                                  'description', 'location', 'country', 'date_taken',
-                                  'collections', 'featured', 'published'])
-
-
 def create_photo(slug, title="Photo", description="Description", location="Location",
                  date_taken=datetime.date(2022, 1, 1), featured=False, published=True,
                  collections=None):
@@ -101,9 +57,60 @@ def create_published_photos(num):
         create_photo(slug="test-slug-" + str(x+1), published=True)
 
 
-@tag('views', 'photo_detail')
-class PhotoDetailViewTests(TestCase):
+@tag('models')
+@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+class PhotoModelTests(TestCase):
+    def test_image_downsizing(self):
+        """Test that ProcessedImageField and ImageSpecField downsize an uploaded image."""
+        photo = create_photo(slug="image-downsizing-test")  # Original image: 2500x1500
+        self.assertEqual(photo.large_image.width, 2000)
+        self.assertEqual(photo.small_image.width, 500)
 
+    def test_image_upsizing(self):
+        """Test that ProcessedImageField upsizes an uploaded image to a width of 2000px."""
+        small_img_path = Path(__file__).resolve().parent / 'test_images/200x100.jpg'
+        small_img = create_uploaded_file_object(small_img_path)
+        photo = Photo.objects.create(slug="image-upsizing-test", title="Photo", description="Desc",
+                                     location="Loc", date_taken=datetime.date(2022, 1, 1),
+                                     featured=False, published=True, large_image=small_img)
+
+        self.assertEqual(photo.large_image.width, 2000)
+
+    def test_photo_str(self):
+        """Test the Photo __str__ method."""
+        photo = create_photo(title="Test Title", slug="test-slug")
+        self.assertEqual(photo.__str__(), "Test Title (test-slug)")
+
+
+class MockPhotoAdmin(PhotoAdmin):
+    def __init__(self):
+        pass
+
+
+@tag('admin')
+@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+class PhotoAdminTests(TestCase):
+    request = RequestFactory()
+
+    def test_get_fields_add(self):
+        """Test that `thumbnail_img_tag` is excluded from add view `fields`"""
+        photo_admin = MockPhotoAdmin()
+        fields = photo_admin.get_fields(self.request)
+        self.assertEqual(fields, ['large_image', 'title', 'slug', 'description', 'location',
+                                  'country', 'date_taken', 'collections', 'featured', 'published'])
+
+    def test_get_fields_change(self):
+        """Test that `thumbnail_img_tag` is included in change view `fields`"""
+        photo_admin = MockPhotoAdmin()
+        fields = photo_admin.get_fields(self.request, obj=MockPhotoImages())
+        self.assertEqual(fields, ['large_image', 'thumbnail_img_tag', 'title', 'slug',
+                                  'description', 'location', 'country', 'date_taken',
+                                  'collections', 'featured', 'published'])
+
+
+@tag('views', 'photo_detail')
+@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+class PhotoDetailViewTests(TestCase):
     def test_published_photo_status(self):
         """Test that a published Photo returns a 200 status code."""
         test_slug = "published-photo"
@@ -166,6 +173,7 @@ class PhotoDetailViewTests(TestCase):
 
 
 @tag('views', 'photo_list')
+@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
 class PhotoListViewTests(TestCase):
     def test_qs_unpublished_filtering(self):
         """Test that only `published` Photos are included in the queryset."""
@@ -248,6 +256,7 @@ class PhotoListViewTests(TestCase):
 
 
 @tag('views', 'collection')
+@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
 class CollectionViewTests(TestCase):
     def test_published_collection_status(self):
         """Test that a published Collection returns a 200 status code."""
@@ -329,6 +338,7 @@ class CollectionViewTests(TestCase):
 
 
 @tag('views', 'search')
+@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
 class SearchViewTests(TestCase):
     def test_qs_search_query_filtering(self):
         """Test that only Photos that match a search criteria are included in the queryset."""

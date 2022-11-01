@@ -18,6 +18,7 @@ venv.bak/
 *.pyc
 db.sqlite3
 media
+test_media
 
 #Other
 secrets.py

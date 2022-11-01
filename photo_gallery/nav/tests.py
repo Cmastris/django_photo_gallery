@@ -1,6 +1,7 @@
-from django.test import tag, TestCase
+from django.test import override_settings, tag, TestCase
 from django.urls import reverse
 
+from photo_gallery.settings import BASE_DIR
 from photos.models import Collection
 from photos.tests import create_photo
 from .models import NavSection, NavLink
@@ -22,6 +23,7 @@ def create_nav_section(order, dropdown=False):
 
 
 @tag('nav', 'context_processors')
+@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
 class NavContextTests(TestCase):
     @classmethod
     def setUpTestData(cls):
