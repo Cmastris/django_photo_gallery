@@ -1,0 +1,21 @@
+{% extends "photos/photo_list.html" %}
+
+{% block head_content_tags %}
+<title>{{ collection.name }} | Chris Mastris</title>
+{# Include page query string if present and >1 (1 is duplicate); other queries excluded #}
+<link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">
+<meta name="description" content="{{ collection.description }}">
+<meta property="og:url" content="{{ absolute_root_url }}{{ request.path }}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ collection.name }}">
+<meta property="og:description" content="{{ collection.description }}">
+{% endblock %}
+
+{% block header_content %}
+<h1 class="display-4">{{ collection.name }}</h1>
+<div class="row justify-content-lg-center mt-4">
+  <div class="col-lg-9">
+    <p>{{ collection.description }}</p>
+  </div>
+</div>
+{% endblock header_content %}

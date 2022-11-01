@@ -9,7 +9,6 @@ class PhotoListView(ListView):
     model = Photo
     paginate_by = 6  # Display 6 photos per page
     homepage = False
-    collection = False
     search = False
 
     def get_filtered_photos(self):
@@ -45,14 +44,13 @@ class PhotoListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_homepage'] = self.homepage
-        context['is_collection'] = self.collection
         context['is_search'] = self.search
         context['sorting'] = self.request.GET.get('sort', 'default')
         return context
 
 
 class CollectionView(PhotoListView):
-    collection = True
+    template_name = "photos/collection.html"
 
     def get_filtered_photos(self):
         """Return a filtered queryset of Photos that are in the collection.
