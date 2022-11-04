@@ -1,7 +1,9 @@
 import datetime
+import shutil
+
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import override_settings, RequestFactory, tag, TestCase
+from django.test import override_settings, RequestFactory, SimpleTestCase, tag, TestCase
 from django.urls import reverse
 from pathlib import Path
 
@@ -10,6 +12,7 @@ from .admin import PhotoAdmin
 from .models import Collection, Photo, validate_lowercase
 
 
+# Deleted at the end of full test runs via TestMediaCleanup()
 TEST_MEDIA_DIR = BASE_DIR / 'test_media/'
 
 
@@ -374,3 +377,18 @@ class ValidatorTests(TestCase):
         mixed_case_str = "mixed-Case-string-100! "
         with self.assertRaises(ValidationError):
             validate_lowercase(mixed_case_str)
+
+
+@tag('cleanup')
+class TestMediaCleanup(SimpleTestCase):
+    """Delete the `TEST_MEDIA_DIR` directory after running `TestCase` subclass tests.
+    https://docs.djangoproject.com/en/4.0/topics/testing/overview/#order-in-which-tests-are-executed
+    """
+    def test_dummy(self):
+        """Trigger class setup and teardown."""
+        pass
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(TEST_MEDIA_DIR)
+        super().tearDownClass()
