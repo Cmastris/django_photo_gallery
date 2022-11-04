@@ -10,6 +10,9 @@ from .admin import PhotoAdmin
 from .models import Collection, Photo, validate_lowercase
 
 
+TEST_MEDIA_DIR = BASE_DIR / 'test_media/'
+
+
 def create_uploaded_file_object(image_path):
     """Create a `SimpleUploadedFile` object using a specified image path."""
     return SimpleUploadedFile(name='test_image.jpg',
@@ -41,7 +44,7 @@ def create_published_photos(num):
 
 
 @tag('models')
-@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoModelTests(TestCase):
     def test_image_downsizing(self):
         """Test that ProcessedImageField and ImageSpecField downsize an uploaded image."""
@@ -71,7 +74,7 @@ class MockPhotoAdmin(PhotoAdmin):
 
 
 @tag('admin')
-@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoAdminTests(TestCase):
     request = RequestFactory()
 
@@ -92,7 +95,7 @@ class PhotoAdminTests(TestCase):
 
 
 @tag('views', 'photo_detail')
-@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoDetailViewTests(TestCase):
     def test_published_photo_status(self):
         """Test that a published Photo returns a 200 status code."""
@@ -156,7 +159,7 @@ class PhotoDetailViewTests(TestCase):
 
 
 @tag('views', 'photo_list')
-@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoListViewTests(TestCase):
     def test_qs_unpublished_filtering(self):
         """Test that only `published` Photos are included in the queryset."""
@@ -239,7 +242,7 @@ class PhotoListViewTests(TestCase):
 
 
 @tag('views', 'collection')
-@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class CollectionViewTests(TestCase):
     def test_published_collection_status(self):
         """Test that a published Collection returns a 200 status code."""
@@ -321,7 +324,7 @@ class CollectionViewTests(TestCase):
 
 
 @tag('views', 'search')
-@override_settings(MEDIA_ROOT=BASE_DIR / 'test_media/', MEDIA_URL='test_media/')
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class SearchViewTests(TestCase):
     def test_qs_search_query_filtering(self):
         """Test that only Photos that match a search criteria are included in the queryset."""
