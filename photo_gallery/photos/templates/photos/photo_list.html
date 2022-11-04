@@ -10,6 +10,7 @@
 <meta property="og:title" content="{% if is_homepage %}Photo Gallery{% else %}Search Results{% endif %}">
 <meta property="og:description" content="A Django photo gallery website by Chris Mastris.">
 {% endblock %}
+{% block robots %}{% if is_search %}<meta name="robots" content="noindex, nofollow">{% endif %}{% endblock %}
 
 {% block content %}
 <div class="container-lg text-center">
