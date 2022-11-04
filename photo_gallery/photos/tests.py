@@ -46,7 +46,7 @@ def create_published_photos(num):
         create_photo(slug="test-slug-" + str(x+1), published=True)
 
 
-@tag('models')
+@tag('photos', 'models')
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoModelTests(TestCase):
     def test_image_downsizing(self):
@@ -76,7 +76,7 @@ class MockPhotoAdmin(PhotoAdmin):
         pass
 
 
-@tag('admin')
+@tag('photos', 'admin')
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoAdminTests(TestCase):
     request = RequestFactory()
@@ -97,7 +97,7 @@ class PhotoAdminTests(TestCase):
                                   'collections', 'featured', 'published'])
 
 
-@tag('views', 'photo_detail')
+@tag('photos', 'views', 'photo_detail')
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoDetailViewTests(TestCase):
     def test_published_photo_status(self):
@@ -161,7 +161,7 @@ class PhotoDetailViewTests(TestCase):
         self.assertNotContains(response, "Collections:")
 
 
-@tag('views', 'photo_list')
+@tag('photos', 'views', 'photo_list')
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class PhotoListViewTests(TestCase):
     def test_qs_unpublished_filtering(self):
@@ -244,7 +244,7 @@ class PhotoListViewTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
-@tag('views', 'collection')
+@tag('photos', 'views', 'collection')
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class CollectionViewTests(TestCase):
     def test_published_collection_status(self):
@@ -326,7 +326,7 @@ class CollectionViewTests(TestCase):
         self.assertContains(response, "no photos were found")
 
 
-@tag('views', 'search')
+@tag('photos', 'views', 'search')
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class SearchViewTests(TestCase):
     def test_qs_search_query_filtering(self):
@@ -361,7 +361,7 @@ class SearchViewTests(TestCase):
         self.assertContains(response, "no photos were found")
 
 
-@tag('validators')
+@tag('photos', 'validators')
 class ValidatorTests(TestCase):
     def test_lowercase_validates(self):
         """Test that `validate_lowercase()` doesn't incorrectly raise a ValidationError"""
@@ -379,7 +379,7 @@ class ValidatorTests(TestCase):
             validate_lowercase(mixed_case_str)
 
 
-@tag('cleanup')
+@tag('photos', 'cleanup')
 class TestMediaCleanup(SimpleTestCase):
     """Delete the `TEST_MEDIA_DIR` directory after running `TestCase` subclass tests.
     https://docs.djangoproject.com/en/4.0/topics/testing/overview/#order-in-which-tests-are-executed

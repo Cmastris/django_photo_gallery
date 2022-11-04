@@ -5,7 +5,7 @@ from django.urls import reverse
 from .models import ContactMessage
 
 
-@tag('views', 'contact')
+@tag('contact', 'views')
 class TestContactMessageCreateView(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -37,7 +37,7 @@ class TestContactMessageCreateView(TestCase):
         self.assertEqual(mail.outbox[0].body, expected_body)
 
 
-@tag('views', 'contact')
+@tag('contact', 'views')
 class TestContactSuccessView(TestCase):
     def test_200_status(self):
         """Test that a request returns a 200 status."""
