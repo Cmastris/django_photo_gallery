@@ -1,0 +1,22 @@
+{% extends "photos/photo_list.html" %}
+
+{% block head_content_tags %}
+<title>Search Results: '{{ search_query }}' | Chris Mastris</title>
+<link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}">
+<meta name="description" content="Search Results: '{{ search_query }}'">
+<meta property="og:url" content="{{ absolute_root_url }}{{ request.path }}?query={{ search_query }}{% if page_obj.number > 1 %}&page={{ page_obj.number }}{% endif %}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Search Results: '{{ search_query }}'">
+<meta property="og:description" content="Search results for '{{ search_query }}'.">
+{% endblock head_content_tags %}
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+
+{% block header_content %}
+<div class="mb-5">
+  <h1 class="display-4">
+    Search results: "{{ search_query }}"
+  </h1>
+</div>
+{% endblock header_content %}
+
+{% block sorting_dropdown %}{# Don't provide sorting options for search results #}{% endblock %}

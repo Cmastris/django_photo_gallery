@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 {% block head_content_tags %}
-<title>{% if is_homepage %}Photo Gallery{% else %}Search Results{% endif %} | Chris Mastris</title>
+<title>Photo Gallery | Chris Mastris</title>
 {# Include page query string if present and >1 (1 is duplicate); other queries excluded #}
 <link rel="canonical" href="{{ absolute_root_url }}{{ request.path }}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">
 <meta name="description" content="A Django photo gallery website by Chris Mastris.">
 <meta property="og:url" content="{{ absolute_root_url }}{{ request.path }}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="{% if is_homepage %}Photo Gallery{% else %}Search Results{% endif %}">
+<meta property="og:title" content="Photo Gallery">
 <meta property="og:description" content="A Django photo gallery website by Chris Mastris.">
-{% endblock %}
-{% block robots %}{% if is_search %}<meta name="robots" content="noindex, nofollow">{% endif %}{% endblock %}
+{% endblock head_content_tags %}
 
 {% block content %}
 <div class="container-lg text-center">
@@ -18,19 +17,13 @@
   {% block header_content %}
   <div class="mb-5">
     <h1 class="display-4">
-      {% if is_homepage %}Photography by Chris Mastris{% else %}Search results: "{{ search_query }}"{% endif %}
+      Photography by Chris Mastris
     </h1>
   </div>
   {% endblock header_content %}
 
-  {% if photo_list|length == 0 %}
-  {# Display error message instead of sorting dropdown and listings #}
-  <div class="my-5 py-5">
-    <p class="fs-5 py-4">Sorry, no photos were found.</p>
-  </div>
-  {% else %}
-  {# Sorting dropdown #}
-  {% if not is_search %}
+  {% block sorting_dropdown %}
+  {% if photo_list|length > 0 %}
   <div class="row justify-content-lg-center pt-4 mt-4">
     <div class="col-md-10">
       <div class="dropdown text-end">
@@ -64,8 +57,15 @@
     </div>
   </div>
   {% endif %}
+  {% endblock sorting_dropdown %}
   
   {# Photo listings #}
+  {% if photo_list|length == 0 %}
+  {# Display error message instead of empty photo list #}
+  <div class="my-5 py-5">
+    <p class="fs-5 py-4">Sorry, no photos were found.</p>
+  </div>
+  {% else %}
   <div class="mt-1 mb-5">
     
     <div class="row justify-content-lg-center">

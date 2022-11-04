@@ -28,7 +28,7 @@ def custom_404_template(request):
 
 
 urlpatterns = [
-    path('', PhotoListView.as_view(homepage=True), name='homepage'),
+    path('', PhotoListView.as_view(), name='homepage'),
     path('admin/', admin.site.urls),
     path('contact', ContactMessageCreateView.as_view(), name='contact'),
     path('contact-success', ContactSuccessView.as_view(), name='contact_success'),
