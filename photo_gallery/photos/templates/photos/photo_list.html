@@ -41,7 +41,7 @@
             {% if sorting == 'default' %}
             <a class="dropdown-item active" href="#" aria-current="true">Featured (default)</a>
             {% else %}
-            <a class="dropdown-item" href="{% if is_homepage %}/{% else %}{{ collection.get_absolute_url }}{% endif %}">Featured (default)</a>
+            <a class="dropdown-item" href="{{ request.path }}">Featured (default)</a>
             {% endif %}
           </li>
           <li>
