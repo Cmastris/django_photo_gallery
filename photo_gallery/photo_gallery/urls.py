@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.views.defaults import page_not_found
+from django.views.generic import TemplateView
 
 from contact.views import ContactMessageCreateView, ContactSuccessView
 from photos.views import CollectionView, PhotoDetailView, PhotoListView, SearchView
@@ -29,6 +30,7 @@ def custom_404_template(request):
 
 urlpatterns = [
     path('', PhotoListView.as_view(), name='homepage'),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('admin/', admin.site.urls),
     path('contact', ContactMessageCreateView.as_view(), name='contact'),
     path('contact-success', ContactSuccessView.as_view(), name='contact_success'),
