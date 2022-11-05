@@ -72,7 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'photo_gallery.settings.global_context',
+                'photo_gallery.context_processors.global_context',
                 'nav.context_processors.navigation',
             ],
         },
@@ -144,13 +144,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ADMINS = [('Admin1', 'email1@example.com'), ('Admin2', 'email2@example.com')]
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'from_email@example.com'
-
-
-# Global context processor
-def global_context(request):
-    """Add global variables to template context data (via settings.py `TEMPLATES`).
-    https://docs.djangoproject.com/en/4.0/ref/templates/api/#writing-your-own-context-processors
-    """
-    return {
-        "absolute_root_url": "https://www.example.com",  # Absolute URL without the path
-    }
