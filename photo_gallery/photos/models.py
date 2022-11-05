@@ -103,6 +103,9 @@ class Photo(models.Model):
 
     published = models.BooleanField(default=True)
 
+    # Use within the XML sitemap
+    last_modified = models.DateTimeField(auto_now=True, null=True)
+
     def __str__(self):
         return "{} ({})".format(self.title, self.slug)
 

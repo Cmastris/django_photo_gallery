@@ -25,3 +25,6 @@ class PhotoSitemap(Sitemap):
 
     def items(self):
         return Photo.objects.filter(published=True).order_by('-date_taken')
+
+    def lastmod(self, photo):
+        return photo.last_modified
