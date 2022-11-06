@@ -1,0 +1,17 @@
+asgiref==3.5.2
+cffi==1.15.1
+click==8.1.3
+colorama==0.4.5
+crispy-bootstrap5==0.7
+Django==4.0.6
+django-appconf==1.0.5
+django-crispy-forms==1.14.0
+django-imagekit==4.1.0
+ExifRead==3.0.0
+filesystemlib==0.1.0
+pilkit==2.0
+Pillow==9.2.0
+pycparser==2.21
+six==1.16.0
+sqlparse==0.4.2
+tzdata==2022.1
