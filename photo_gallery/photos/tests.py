@@ -53,7 +53,7 @@ class PhotoModelTests(TestCase):
         """Test that ProcessedImageField and ImageSpecField downsize an uploaded image."""
         photo = create_photo(slug="image-downsizing-test")  # Original image: 2500x1500
         self.assertEqual(photo.large_image.width, 2000)
-        self.assertEqual(photo.small_image.width, 500)
+        self.assertEqual(photo.small_image.width, 550)
 
     def test_image_upsizing(self):
         """Test that ProcessedImageField upsizes an uploaded image to a width of 2000px."""

@@ -64,7 +64,7 @@ class Photo(models.Model):
 
     # Use to improve loading performance (photo listings and mobile images)
     small_image = ImageSpecField(source='large_image',
-                                 processors=[ResizeToFit(width=500)],
+                                 processors=[ResizeToFit(width=550)],
                                  format='JPEG')
 
     # Display in the admin interface via `thumbnail_img_tag()`
