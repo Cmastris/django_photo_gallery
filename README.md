@@ -14,6 +14,7 @@ A photo gallery website built using Django 4 and Bootstrap 5. Take a look: https
 - [Setup and deployment](#setup-and-deployment)
 - [FAQs](#faqs)
   - [Can I see an example?](#can-i-see-an-example)
+  - [Why did you build this?](#why-did-you-build-this)
   - [How can I ask questions, report bugs, or provide feedback?](#how-can-i-ask-questions-report-bugs-or-provide-feedback)
   - [Is this project in active development?](#is-this-project-in-active-development)
 
@@ -116,6 +117,9 @@ For this project, the following deployment steps will also be necessary:
 
 ### Can I see an example?
 Yes! A production version of the website which is populated with content (my own photos) can be found here: https://cmastris.eu.pythonanywhere.com/.
+
+### Why did you build this?
+After completing the [Django for Everybody Specialization](https://www.coursera.org/account/accomplishments/specialization/certificate/C3EC98DB3YJN) on Coursera, I wanted to build upon my experience working with Django. (Showing off my photos was a bonus!)
 
 ### How can I ask questions, report bugs, or provide feedback?
 Feel free to create an issue or open a new discussion.
