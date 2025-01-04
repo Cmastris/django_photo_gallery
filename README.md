@@ -11,7 +11,8 @@ A photo gallery website built using Django 4 and Bootstrap 5. Take a look: https
   - [Customised Django admin site](#customised-django-admin-site)
   - [SEO best practices](#seo-best-practices)
   - [Comprehensively tested](#comprehensively-tested)
-- [Setup and deployment](#setup-and-deployment)
+- [Setup](#setup)
+- [Deployment](#deployment)
 - [FAQs](#faqs)
   - [Can I see an example?](#can-i-see-an-example)
   - [Why did you build this?](#why-did-you-build-this)
@@ -97,11 +98,16 @@ Important functionality that extends or modifies Django's code is validated via 
 
 *Check out the code: [photo tests](photo_gallery/photos/tests.py); [navigation menu tests](photo_gallery/nav/tests.py); [contact message tests](photo_gallery/contact/tests.py).*
 
-## Setup and deployment
-If you're unfamiliar with Django, the [official tutorial](https://docs.djangoproject.com/en/4.0/intro/tutorial01/) explains how to set up a new project.
+## Setup
+1) [Clone a local copy of this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+2) Install the latest stable version of Python 3.10 and the packages in the [requirements.txt file](requirements.txt), preferably using a virtual environment (e.g. using [venv](https://docs.python.org/3/library/venv.html)).
+3) Navigate into the outer `photo_gallery` directory (which contains `manage.py`) in your chosen command-line interface, which is where you should run all of the following commands, and activate your virtual environment if applicable.
+4) Set up the project as detailed in the [official tutorial](https://docs.djangoproject.com/en/4.0/intro/tutorial02/), skipping the project and app creation/coding steps (as these already exist within the cloned repository). Specifically, this includes reviewing/adjusting the [project settings](photo_gallery/photo_gallery/settings.py), applying the database migrations (creating/modifying your local database tables) using `python manage.py migrate`, and creating an admin site user (login details) using `python manage.py createsuperuser`.
+5) Run the test suite using `python manage.py test`; if any tests fail, check that you've followed all of the instructions correctly and then raise an issue if you're still encountering problems.
+6) Run the application locally using `python manage.py runserver`.
+7) There won't be much to see at this point, so add some placeholder data (photos, collections etc.) via the Django admin site or programmatically, as detailed in the [official tutorial](https://docs.djangoproject.com/en/4.0/intro/tutorial02/). From there, you can make any adjustments to the project code as desired.
 
-As an overview, you'll need to clone a local copy of this repository, install the [requirements](requirements.txt), and run the database migrations using `python manage.py migrate` from within the outer `photo_gallery` directory that contains `manage.py`. From there, you can run the application locally using `python manage.py runserver` from within the same directory.
-
+## Deployment
 When you're ready to deploy a production (i.e. public) version of the website, be sure to read Django's [deployment documentation](https://docs.djangoproject.com/en/4.0/howto/deployment/) (including the [deployment checklist](https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/)) to avoid security vulnerabilities and other issues.
 
 For this project, the following deployment steps will also be necessary:
