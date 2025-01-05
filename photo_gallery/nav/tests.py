@@ -35,7 +35,7 @@ class NavContextTests(TestCase):
     def test_homepage_nav_context(self):
         """Test that the homepage context includes correctly ordered NavSection objects."""
         response = self.client.get(reverse("homepage"))
-        self.assertQuerysetEqual(response.context['nav_sections'],
+        self.assertQuerySetEqual(response.context['nav_sections'],
                                  [self.section1, self.section2, self.section3])
 
     @tag('photo_list')
@@ -43,7 +43,7 @@ class NavContextTests(TestCase):
         """Test that a collection page context includes correctly ordered NavSection objects."""
         col = Collection.objects.create(name="Col1", slug="test-collection", published=True)
         response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
-        self.assertQuerysetEqual(response.context['nav_sections'],
+        self.assertQuerySetEqual(response.context['nav_sections'],
                                  [self.section1, self.section2, self.section3])
 
     @tag('photo_detail')
@@ -51,5 +51,5 @@ class NavContextTests(TestCase):
         """Test that a photo detail page context includes correctly ordered NavSection objects."""
         photo = create_photo(slug="test-photo", published=True)
         response = self.client.get(reverse("photo_detail", kwargs={"slug":photo.slug}))
-        self.assertQuerysetEqual(response.context['nav_sections'],
+        self.assertQuerySetEqual(response.context['nav_sections'],
                                  [self.section1, self.section2, self.section3])

@@ -170,7 +170,7 @@ class PhotoListViewTests(TestCase):
         create_photo(slug="unpublished-photo", published=False)
 
         response = self.client.get(reverse("homepage"))
-        self.assertQuerysetEqual(response.context['photo_list'], [published_photo])
+        self.assertQuerySetEqual(response.context['photo_list'], [published_photo])
 
     def test_qs_featured_ordering(self):
         """Test that `featured` Photos are ordered first in the queryset."""
@@ -188,7 +188,7 @@ class PhotoListViewTests(TestCase):
         p_2020 = create_photo(slug="2020", date_taken=datetime.date(2020, 1, 1))
 
         response = self.client.get(reverse("homepage"))
-        self.assertQuerysetEqual(response.context['photo_list'], [p_2022, p_2021, p_2020])
+        self.assertQuerySetEqual(response.context['photo_list'], [p_2022, p_2021, p_2020])
 
     def test_qs_combined_ordering(self):
         """Test that Photos are ordered by descending `featured` then by descending `date_taken`"""
@@ -201,7 +201,7 @@ class PhotoListViewTests(TestCase):
 
         response = self.client.get(reverse("homepage"))
         expected_qs = [p_featured_new, p_featured_old, p_unfeatured_new, p_unfeatured_old]
-        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+        self.assertQuerySetEqual(response.context['photo_list'], expected_qs)
 
     def test_qs_new_ordering(self):
         """Test that Photos are ordered by descending `date_taken` with the `new` query string"""
@@ -214,7 +214,7 @@ class PhotoListViewTests(TestCase):
 
         response = self.client.get(reverse("homepage") + "?sort=new")
         expected_qs = [p_unfeatured_new, p_featured_mid, p_unfeatured_old]
-        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+        self.assertQuerySetEqual(response.context['photo_list'], expected_qs)
 
     def test_qs_old_ordering(self):
         """Test that Photos are ordered by ascending `date_taken` with the `old` query string"""
@@ -227,7 +227,7 @@ class PhotoListViewTests(TestCase):
 
         response = self.client.get(reverse("homepage") + "?sort=old")
         expected_qs = [p_unfeatured_old, p_featured_mid, p_unfeatured_new]
-        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+        self.assertQuerySetEqual(response.context['photo_list'], expected_qs)
 
     def test_paginated_200_status(self):
         """Test that a paginated URL with at least 1 associated Photo returns a 200 status code."""
@@ -272,7 +272,7 @@ class CollectionViewTests(TestCase):
         create_photo(slug="unpublished-photo", published=False, collections=[col])
 
         response = self.client.get(reverse("collection", kwargs={"collection_slug": col.slug}))
-        self.assertQuerysetEqual(response.context['photo_list'], [published_photo])
+        self.assertQuerySetEqual(response.context['photo_list'], [published_photo])
 
     def test_qs_collection_filtering(self):
         """Test that only Photos in a collection are included in the collection queryset."""
@@ -283,7 +283,7 @@ class CollectionViewTests(TestCase):
         create_photo(slug="photo-3", published=True, collections=[col2])
 
         response = self.client.get(reverse("collection", kwargs={"collection_slug": col1.slug}))
-        self.assertQuerysetEqual(response.context['photo_list'], [photo1])
+        self.assertQuerySetEqual(response.context['photo_list'], [photo1])
 
     def test_qs_multiple_collection_filtering(self):
         """Test that Photos with multiple collections are included in the collection queryset."""
@@ -292,7 +292,7 @@ class CollectionViewTests(TestCase):
         photo = create_photo(slug="photo-1", published=True, collections=[col2, col1])
 
         response = self.client.get(reverse("collection", kwargs={"collection_slug": col1.slug}))
-        self.assertQuerysetEqual(response.context['photo_list'], [photo])
+        self.assertQuerySetEqual(response.context['photo_list'], [photo])
 
     def test_collection_name_in_response(self):
         """Test that a published collection response contains the collection name."""
@@ -342,7 +342,7 @@ class SearchViewTests(TestCase):
 
         response = self.client.get(reverse("search") + "?query=testsearch")
         expected_qs = [match1, match2, match3]
-        self.assertQuerysetEqual(response.context['photo_list'], expected_qs)
+        self.assertQuerySetEqual(response.context['photo_list'], expected_qs)
 
     def test_200_status(self):
         """Test that a request with a non-empty query returns a 200 status."""
