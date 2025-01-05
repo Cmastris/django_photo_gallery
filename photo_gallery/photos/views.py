@@ -5,19 +5,19 @@ from django.views.generic import DetailView, ListView
 from .models import Collection, Photo
 
 
+# https://docs.djangoproject.com/en/4.2/ref/models/querysets/
+
+
 class PhotoListView(ListView):
     model = Photo
     paginate_by = 6  # Display 6 photos per page
 
     def get_filtered_photos(self):
-        """Return a filtered queryset of Photos that are published.
-        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
-        """
+        """Return a filtered queryset of Photos that are published."""
         return Photo.objects.filter(published=True)
 
     def get_sorted_photos(self, qs):
         """Sort and return a Photo queryset depending on the `sort` query string (if applicable).
-        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
 
         Args:
             qs (QuerySet): the (filtered) QuerySet to be sorted.
@@ -49,9 +49,7 @@ class CollectionView(PhotoListView):
     template_name = "photos/collection.html"
 
     def get_filtered_photos(self):
-        """Return a filtered queryset of Photos that are in the collection.
-        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
-        """
+        """Return a filtered queryset of Photos that are in the collection."""
         collection = get_object_or_404(Collection, slug=self.kwargs['collection_slug'])
         if not collection.published:
             raise Http404()
@@ -68,12 +66,10 @@ class SearchView(PhotoListView):
     template_name = "photos/search.html"
 
     def get_filtered_photos(self):
-        """Return a filtered queryset of Photos whose primary content includes the search query.
-        https://docs.djangoproject.com/en/4.0/ref/models/querysets/
-        """
+        """Return a filtered queryset of Photos whose primary content includes the search query."""
         query = self.request.GET.get('query', None)
         if query is not None:
-            # https://docs.djangoproject.com/en/4.0/topics/db/queries/#complex-lookups-with-q-objects
+            # https://docs.djangoproject.com/en/4.2/topics/db/queries/#complex-lookups-with-q-objects
             lookup = Q(title__icontains=query) | \
                      Q(description__icontains=query) | \
                      Q(location__icontains=query)

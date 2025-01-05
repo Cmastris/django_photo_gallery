@@ -47,8 +47,8 @@ class PhotoAdmin(admin.ModelAdmin):
 
     def get_fields(self, request, obj=None):
         """Return a list of fields (str) for the Photo add form (obj=None) or change form.
-        https://docs.djangoproject.com/en/4.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.get_fields
-        https://github.com/django/django/blob/stable/4.0.x/django/contrib/admin/options.py#L365
+        https://docs.djangoproject.com/en/4.2/ref/contrib/admin/#django.contrib.admin.ModelAdmin.get_fields
+        https://github.com/django/django/blob/stable/4.2.x/django/contrib/admin/options.py#L372
         """
         if obj is None:
             # Prevent modification of any lists within `fields`

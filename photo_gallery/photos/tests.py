@@ -382,7 +382,7 @@ class ValidatorTests(TestCase):
 @tag('photos', 'cleanup')
 class TestMediaCleanup(SimpleTestCase):
     """Delete the `TEST_MEDIA_DIR` directory after running `TestCase` subclass tests.
-    https://docs.djangoproject.com/en/4.0/topics/testing/overview/#order-in-which-tests-are-executed
+    https://docs.djangoproject.com/en/4.2/topics/testing/overview/#order-in-which-tests-are-executed
     """
     def test_dummy(self):
         """Trigger class setup and teardown."""

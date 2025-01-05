@@ -1,7 +1,7 @@
 """photo_gallery URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.0/topics/http/urls/
+    https://docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -45,4 +45,4 @@ urlpatterns = [
     path('404', custom_404_template),
     path('<slug:collection_slug>', CollectionView.as_view(), name='collection'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/#serving-files-uploaded-by-a-user-during-development
+# https://docs.djangoproject.com/en/4.2/howto/static-files/#serving-files-uploaded-by-a-user-during-development

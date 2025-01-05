@@ -33,7 +33,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mt-2 mt-lg-0">
           {% for section in nav_sections %}
-          {# https://docs.djangoproject.com/en/4.0/topics/db/queries/#following-relationships-backward #}
+          {# https://docs.djangoproject.com/en/4.2/topics/db/queries/#following-relationships-backward #}
           {% if section.navlink_set.all|length > 1 %}
           <li class="nav-item dropdown pb-1 pb-lg-0 px-lg-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarSection{{ forloop.counter }}DropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -9,7 +9,7 @@ from imagekit.processors import ResizeToFit
 
 
 def validate_lowercase(string):
-    # https://docs.djangoproject.com/en/4.0/ref/validators/
+    # https://docs.djangoproject.com/en/4.2/ref/validators/
     lower_str = string.lower()
     if string != lower_str:
         raise ValidationError("All letters must be lowercase.")
