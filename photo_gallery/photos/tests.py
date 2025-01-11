@@ -17,9 +17,15 @@ TEST_MEDIA_DIR = BASE_DIR / 'test_media/'
 
 
 def create_uploaded_file_object(image_path):
-    """Create a `SimpleUploadedFile` object using a specified image path."""
+    """Create a `SimpleUploadedFile` object using a specified image path.
+    Used to mock the creation of a Photo object without manual upload.
+    https://docs.djangoproject.com/en/4.2/_modules/django/core/files/uploadedfile/
+    """
+    with open(image_path, 'rb') as img_file:
+        file_content = img_file.read()
+
     return SimpleUploadedFile(name='test_image.jpg',
-                              content=open(image_path, 'rb').read(),
+                              content=file_content,
                               content_type='image/jpeg')
 
 
