@@ -47,7 +47,7 @@ def create_published_photos(num):
 
 
 @tag('photos', 'models')
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, SECURE_SSL_REDIRECT=False)
 class PhotoModelTests(TestCase):
     def test_image_downsizing(self):
         """Test that ProcessedImageField and ImageSpecField downsize an uploaded image."""
@@ -77,7 +77,7 @@ class MockPhotoAdmin(PhotoAdmin):
 
 
 @tag('photos', 'admin')
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, SECURE_SSL_REDIRECT=False)
 class PhotoAdminTests(TestCase):
     request = RequestFactory()
 
@@ -98,7 +98,7 @@ class PhotoAdminTests(TestCase):
 
 
 @tag('photos', 'views', 'photo_detail')
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, SECURE_SSL_REDIRECT=False)
 class PhotoDetailViewTests(TestCase):
     def test_published_photo_status(self):
         """Test that a published Photo returns a 200 status code."""
@@ -162,7 +162,7 @@ class PhotoDetailViewTests(TestCase):
 
 
 @tag('photos', 'views', 'photo_list')
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, SECURE_SSL_REDIRECT=False)
 class PhotoListViewTests(TestCase):
     def test_qs_unpublished_filtering(self):
         """Test that only `published` Photos are included in the queryset."""
@@ -245,7 +245,7 @@ class PhotoListViewTests(TestCase):
 
 
 @tag('photos', 'views', 'collection')
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, SECURE_SSL_REDIRECT=False)
 class CollectionViewTests(TestCase):
     def test_published_collection_status(self):
         """Test that a published Collection returns a 200 status code."""
@@ -327,7 +327,7 @@ class CollectionViewTests(TestCase):
 
 
 @tag('photos', 'views', 'search')
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, SECURE_SSL_REDIRECT=False)
 class SearchViewTests(TestCase):
     def test_qs_search_query_filtering(self):
         """Test that only Photos that match a search criteria are included in the queryset."""

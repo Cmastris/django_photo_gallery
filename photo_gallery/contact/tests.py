@@ -1,11 +1,12 @@
 from django.core import mail
-from django.test import tag, TestCase
+from django.test import override_settings, tag, TestCase
 from django.urls import reverse
 
 from .models import ContactMessage
 
 
 @tag('contact', 'views')
+@override_settings(SECURE_SSL_REDIRECT=False)
 class TestContactMessageCreateView(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -38,6 +39,7 @@ class TestContactMessageCreateView(TestCase):
 
 
 @tag('contact', 'views')
+@override_settings(SECURE_SSL_REDIRECT=False)
 class TestContactSuccessView(TestCase):
     def test_200_status(self):
         """Test that a request returns a 200 status."""

@@ -22,7 +22,7 @@ def create_nav_section(order, dropdown=False):
 
 
 @tag('nav', 'context_processors')
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, SECURE_SSL_REDIRECT=False)
 class NavContextTests(TestCase):
     @classmethod
     def setUpTestData(cls):
