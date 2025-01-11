@@ -132,4 +132,6 @@ After completing the [Django for Everybody Specialization](https://www.coursera.
 Feel free to create an issue or open a new discussion.
 
 ### Is this project in active development?
-There are no further updates/features planned and I'm not looking for contributions, but I'll be happy to fix any (significant) bugs.
+There are no major updates/features planned and I'm not looking for any substantial contributions (but you're welcome to fork your own version).
+
+However, I plan to maintain the project by periodically upgrading to newer (actively supported) versions of Python/Django/Bootstrap/other packages and fixing any significant bugs.
