@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = "==3.10.*"
 
 [[package]]
@@ -55,14 +55,14 @@ wheels = [
 
 [[package]]
 name = "django-crispy-forms"
-version = "2.3"
+version = "2.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/04/f6/5bce7ae3512171c7c0ca3de31689e2a1ced8b030f156fcf13d2870e5468e/django_crispy_forms-2.3.tar.gz", hash = "sha256:2db17ae08527201be1273f0df789e5f92819e23dd28fec69cffba7f3762e1a38", size = 278849, upload-time = "2024-07-19T13:08:16.264Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/79/a1/6a638d13717e4d4f8df169dade0fa51bdc65d9825df39d98ce709a776b49/django_crispy_forms-2.5.tar.gz", hash = "sha256:066e72a8f152a1334f1c811cc37740868efe3265e5a218f79079ef89f848c3d8", size = 1097999, upload-time = "2025-11-06T20:44:01.921Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4c/3b/5dc3faf8739d1ce7a73cedaff508b4af8f6aa1684120ded6185ca0c92734/django_crispy_forms-2.3-py3-none-any.whl", hash = "sha256:efc4c31e5202bbec6af70d383a35e12fc80ea769d464fb0e7fe21768bb138a20", size = 31411, upload-time = "2024-07-19T13:08:14.498Z" },
+    { url = "https://files.pythonhosted.org/packages/2c/58/ac3a11950baaf75c1f3242e3af9dfe45201f6ee10c113dd37a9c000876d2/django_crispy_forms-2.5-py3-none-any.whl", hash = "sha256:adc99d5901baca09479c53bf536b3909e80a9f2bb299438a223de4c106ebf1f9", size = 31464, upload-time = "2025-11-06T20:44:00.795Z" },
 ]
 
 [[package]]
@@ -93,7 +93,7 @@ dependencies = [
 requires-dist = [
     { name = "crispy-bootstrap5", specifier = "==2024.10" },
     { name = "django", specifier = "==4.2.17" },
-    { name = "django-crispy-forms", specifier = "==2.3" },
+    { name = "django-crispy-forms", specifier = "==2.5" },
     { name = "django-imagekit", specifier = "==5.0.0" },
 ]
 
