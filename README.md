@@ -100,9 +100,9 @@ Important functionality that extends or modifies Django's code is validated via 
 
 ## Setup
 1) [Clone a local copy of this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
-2) Install the latest stable version of Python 3.10 and the packages in the [requirements.txt file](requirements.txt), preferably using a virtual environment (e.g. using [venv](https://docs.python.org/3/library/venv.html)).
+2) Install all requirements (specific versions of Python and packages) using the [uv package manager](https://docs.astral.sh/uv/guides/projects/) or another tool of your choice (based on the [pyproject file](/pyproject.toml)).
 3) Rename the [secrets_template.py file](photo_gallery/photo_gallery/secrets_template.py) to `secrets.py` and assign a secret key string to the `KEY` variable, as detailed in [Django's documentation](https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-SECRET_KEY).
-4) Navigate into the outer `photo_gallery` directory (which contains `manage.py`) in your chosen command-line interface, which is where you should run all of the following commands, and activate your virtual environment if applicable.
+4) Navigate into the outer `photo_gallery` directory (which contains `manage.py`) in your chosen command-line interface, which is where you should run all of the following commands, and activate your virtual environment (or use [`uv run`](https://docs.astral.sh/uv/concepts/projects/run/)) if applicable.
 5) Set up the project as detailed in Django's [official tutorial](https://docs.djangoproject.com/en/4.2/intro/tutorial02/), skipping the project and app creation/coding steps (as these already exist within the cloned repository). Specifically, this includes reviewing/adjusting the [project settings](photo_gallery/photo_gallery/settings.py), applying the database migrations (creating/modifying your local database tables) using `python manage.py migrate`, and creating an admin site user (login details) using `python manage.py createsuperuser`.
 6) Run the test suite using `python manage.py test`; if any tests fail, check that you've followed all of the instructions correctly and then raise an issue if you're still encountering problems.
 7) Run the application locally using `python manage.py runserver`.
