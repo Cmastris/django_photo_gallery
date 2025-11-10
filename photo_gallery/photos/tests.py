@@ -19,7 +19,8 @@ TEST_MEDIA_DIR = BASE_DIR / 'test_media/'
 def create_uploaded_file_object(image_path):
     """Create a `SimpleUploadedFile` object using a specified image path.
     Used to mock the creation of a Photo object without manual upload.
-    https://docs.djangoproject.com/en/4.2/_modules/django/core/files/uploadedfile/
+    https://docs.djangoproject.com/en/5.2/ref/files/uploads/
+    https://github.com/django/django/blob/stable/5.2.x/django/core/files/uploadedfile.py
     """
     with open(image_path, 'rb') as img_file:
         file_content = img_file.read()
@@ -388,7 +389,7 @@ class ValidatorTests(TestCase):
 @tag('photos', 'cleanup')
 class TestMediaCleanup(SimpleTestCase):
     """Delete the `TEST_MEDIA_DIR` directory after running `TestCase` subclass tests.
-    https://docs.djangoproject.com/en/4.2/topics/testing/overview/#order-in-which-tests-are-executed
+    https://docs.djangoproject.com/en/5.2/topics/testing/overview/#order-in-which-tests-are-executed
     """
     def test_dummy(self):
         """Trigger class setup and teardown."""

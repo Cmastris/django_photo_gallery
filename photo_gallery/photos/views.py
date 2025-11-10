@@ -5,7 +5,7 @@ from django.views.generic import DetailView, ListView
 from .models import Collection, Photo
 
 
-# https://docs.djangoproject.com/en/4.2/ref/models/querysets/
+# https://docs.djangoproject.com/en/5.2/ref/models/querysets/
 
 
 class PhotoListView(ListView):
@@ -69,7 +69,7 @@ class SearchView(PhotoListView):
         """Return a filtered queryset of Photos whose primary content includes the search query."""
         query = self.request.GET.get('query', None)
         if query is not None:
-            # https://docs.djangoproject.com/en/4.2/topics/db/queries/#complex-lookups-with-q-objects
+            # https://docs.djangoproject.com/en/5.2/topics/db/queries/#complex-lookups-with-q-objects
             lookup = Q(title__icontains=query) | \
                      Q(description__icontains=query) | \
                      Q(location__icontains=query)
