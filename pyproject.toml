@@ -3,7 +3,7 @@ name = "django-photo-gallery"
 version = "1.0"
 description = "A photo gallery website built using Django."
 readme = "README.md"
-requires-python = ">=3.10,<3.11"
+requires-python = ">=3.11.9,<3.12"
 dependencies = [
     "crispy-bootstrap5==2025.6",
     "django==5.2.8",
