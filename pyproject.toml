@@ -5,8 +5,8 @@ description = "A photo gallery website built using Django."
 readme = "README.md"
 requires-python = ">=3.13.10,<3.14"
 dependencies = [
-    "crispy-bootstrap5==2025.6",
+    "crispy-bootstrap5==2026.3",
     "django==5.2.12",
-    "django-crispy-forms==2.5",
-    "django-imagekit==6.0.0",
+    "django-crispy-forms==2.6",
+    "django-imagekit==6.1.0",
 ]
