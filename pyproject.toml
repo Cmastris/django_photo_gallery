@@ -9,4 +9,5 @@ dependencies = [
     "django==5.2.13",
     "django-crispy-forms==2.6",
     "django-imagekit==6.1.0",
+    "python-dotenv==1.2.2",
 ]

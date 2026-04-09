@@ -21,5 +21,6 @@ media
 test_media
 
 #Other
+.env
 secrets.py
 photo_gallery/**/notes.py
