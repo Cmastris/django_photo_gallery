@@ -13,6 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+from dotenv import load_dotenv
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -44,6 +47,10 @@ urlpatterns = [
     path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
     path('404', custom_404_template),
     path('<slug:collection_slug>', CollectionView.as_view(), name='collection'),
+    path(os.environ.get('GSC_FILENAME'), TemplateView.as_view(
+        template_name='gsc_verification',
+        extra_context=dict(file_content=os.environ.get('GSC_FILE_CONTENT'))
+    )),
 ]
 
 # Serve uploaded files in a local dev environment
