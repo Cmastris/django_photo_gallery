@@ -11,3 +11,8 @@ dependencies = [
     "django-imagekit==6.1.0",
     "python-dotenv==1.2.2",
 ]
+
+[project.optional-dependencies]
+mysql = [
+    "mysqlclient==2.2.8",
+]

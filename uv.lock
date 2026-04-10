@@ -87,13 +87,29 @@ dependencies = [
     { name = "python-dotenv" },
 ]
 
+[package.optional-dependencies]
+mysql = [
+    { name = "mysqlclient" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "crispy-bootstrap5", specifier = "==2026.3" },
     { name = "django", specifier = "==5.2.13" },
     { name = "django-crispy-forms", specifier = "==2.6" },
     { name = "django-imagekit", specifier = "==6.1.0" },
+    { name = "mysqlclient", marker = "extra == 'mysql'", specifier = "==2.2.8" },
     { name = "python-dotenv", specifier = "==1.2.2" },
+]
+provides-extras = ["mysql"]
+
+[[package]]
+name = "mysqlclient"
+version = "2.2.8"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/eb/b0/9df076488cb2e536d40ce6dbd4273c1f20a386e31ffe6e7cb613902b3c2a/mysqlclient-2.2.8.tar.gz", hash = "sha256:8ed20c5615a915da451bb308c7d0306648a4fd9a2809ba95c992690006306199", size = 92287, upload-time = "2026-02-10T10:58:37.405Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e6/d5/76e369b0fdccd2eb9ed7d890e4e3e23aa1344fea62f0180d7f1574285e54/mysqlclient-2.2.8-cp313-cp313-win_amd64.whl", hash = "sha256:a81f5e12f8d05439709cb02fba97f9f76d1a6c528164f2260d8798fec969e300", size = 207158, upload-time = "2026-02-10T10:58:38.663Z" },
 ]
 
 [[package]]
