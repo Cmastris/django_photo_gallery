@@ -113,7 +113,6 @@ When you're ready to deploy a production (i.e. public) version of the website, b
 
 For this project, the following deployment steps will also be necessary:
 
-- Use [prod_urls.py](photo_gallery/photo_gallery/prod_urls.py) (which removes [development-only media file serving](https://docs.djangoproject.com/en/5.2/howto/static-files/#serving-files-uploaded-by-a-user-during-development)) rather than [urls.py](photo_gallery/photo_gallery/urls.py)
 - Configure and use [prod_settings.py](photo_gallery/photo_gallery/prod_settings.py) (which ensures that project settings are safe and appropriate for production), referring to the settings documentation where needed, rather than [settings.py](photo_gallery/photo_gallery/settings.py)
 - Run a site name data migration (which is used to construct absolute URLs, e.g. in the XML sitemap and HTML tags) using the template and instructions in [site_name_migration_template.py](photo_gallery/photo_gallery/site_name_migration_template.py)
 - Change the [robots.txt](photo_gallery/templates/robots.txt) sitemap link to the correct URL (for simplicity, this doesn't use the site data in the previous step)

@@ -44,5 +44,9 @@ urlpatterns = [
     path('photos/<slug:slug>', PhotoDetailView.as_view(), name='photo_detail'),
     path('404', custom_404_template),
     path('<slug:collection_slug>', CollectionView.as_view(), name='collection'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Serve uploaded files in a local dev environment
 # https://docs.djangoproject.com/en/5.2/howto/static-files/#serving-files-uploaded-by-a-user-during-development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
