@@ -29,6 +29,8 @@ from contact.views import ContactMessageCreateView, ContactSuccessView
 from photos.views import CollectionView, PhotoDetailView, PhotoListView, SearchView
 
 
+load_dotenv()  # Load variables from .env in the project root dir
+
 def custom_404_template(request):
     return page_not_found(request, None)
 
