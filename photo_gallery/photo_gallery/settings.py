@@ -11,6 +11,17 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+
+def get_list_from_env(env_key):
+    """Convert an env variable string/list to a Python list.
+  
+    Retrieves an env string containing zero, one, or more values 
+    separated by commas and returns a list with empty strings removed.
+    """
+    env_string_list = os.environ.get(env_key, '').split(',')
+    return [val for val in env_string_list if val != '']
+
+
 load_dotenv()  # Load variables from .env in the project root dir
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_list_from_env('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'crispy_forms',

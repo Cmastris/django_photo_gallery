@@ -1,6 +1,6 @@
 """
 Django production settings.
-Review settings marked with TODOs and update them if appropriate.
+Review settings and update them if appropriate.
 
 More information: https://docs.djangoproject.com/en/5.2/topics/settings/
 All settings: https://docs.djangoproject.com/en/5.2/ref/settings/
@@ -10,6 +10,17 @@ Deployment: https://docs.djangoproject.com/en/5.2/howto/deployment/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+
+
+def get_list_from_env(env_key):
+    """Convert an env variable string/list to a Python list.
+  
+    Retrieves an env string containing zero, one, or more values 
+    separated by commas and returns a list with empty strings removed.
+    """
+    env_string_list = os.environ.get(env_key, '').split(',')
+    return [val for val in env_string_list if val != '']
+
 
 load_dotenv()  # Load variables from .env in the project root dir
 
@@ -22,10 +33,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.example.com']  # TODO
+ALLOWED_HOSTS = get_list_from_env('ALLOWED_HOSTS')
 
 CSRF_COOKIE_SECURE = True  # TODO
-CSRF_TRUSTED_ORIGINS = ['https://www.example.com']  # TODO
+CSRF_TRUSTED_ORIGINS = get_list_from_env('CSRF_TRUSTED_ORIGINS')
 SESSION_COOKIE_SECURE = True  # TODO
 SECURE_SSL_REDIRECT = True  # TODO
 
