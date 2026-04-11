@@ -11,7 +11,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
-from .database_settings import DB_SETTINGS
+from .database_settings import *
 from .email_settings import *
 
 
@@ -90,9 +90,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'photo_gallery.wsgi.application'
-
-# Database (refer to database_settings.py)
-DATABASES = DB_SETTINGS
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
