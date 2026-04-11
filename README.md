@@ -11,8 +11,7 @@ A photo gallery website built using Django 5.2 and Bootstrap 5. Take a look: htt
   - [Customised Django admin site](#customised-django-admin-site)
   - [SEO best practices](#seo-best-practices)
   - [Comprehensively tested](#comprehensively-tested)
-- [Setup](#setup)
-- [Deployment](#deployment)
+- [Setup \& Deployment](#setup--deployment)
 - [FAQs](#faqs)
   - [Can I see an example?](#can-i-see-an-example)
   - [Why did you build this?](#why-did-you-build-this)
@@ -98,22 +97,22 @@ Important functionality that extends or modifies Django's code is validated via 
 
 *Check out the code: [photo tests](photo_gallery/photos/tests.py); [navigation menu tests](photo_gallery/nav/tests.py); [contact message tests](photo_gallery/contact/tests.py).*
 
-## Setup
-1) [Clone a local copy of this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+## Setup & Deployment
+1) [Clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) this repository (if you're happy using the code without changes) or [create & clone a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) of this repository (if you're planning to make changes to the code) this repository.
 2) Install all requirements (specific versions of Python and packages) using the [uv package manager](https://docs.astral.sh/uv/guides/projects/) or another tool of your choice (based on the [pyproject file](/pyproject.toml)).
-3) Rename the [.env.example file](photo_gallery/.env.example) to `.env` and assign a secret key string to the `DJANGO_SECRET_KEY` variable, as detailed in [Django's documentation](https://docs.djangoproject.com/en/5.2/ref/settings/#secret-key).
+3) Create a copy of the [.env.example file](photo_gallery/.env.example) and rename it to `.env`. Assign values to the keys in the file (depending on the environment and deployment configuration, as applicable). These mostly relate to (i.e. are used to set) Django's settings (as described in Django's [settings guide](https://docs.djangoproject.com/en/5.2/topics/settings/) and [settings reference](https://docs.djangoproject.com/en/5.2/ref/settings/)), but if in doubt you can search for the key to see how it's used.
 4) Navigate into the outer `photo_gallery` directory (which contains `manage.py`) in your chosen command-line interface, which is where you should run all of the following commands, and activate your virtual environment (or use [`uv run`](https://docs.astral.sh/uv/concepts/projects/run/)) if applicable.
-5) Set up the project as detailed in Django's [official tutorial](https://docs.djangoproject.com/en/5.2/intro/tutorial02/), skipping the project and app creation/coding steps (as these already exist within the cloned repository). Specifically, this includes reviewing/adjusting the [project settings](photo_gallery/photo_gallery/settings.py), applying the database migrations (creating/modifying your local database tables) using `python manage.py migrate`, and creating an admin site user (login details) using `python manage.py createsuperuser`.
-6) Run the test suite using `python manage.py test`; if any tests fail, check that you've followed all of the instructions correctly and then raise an issue if you're still encountering problems.
-7) Run the application locally using `python manage.py runserver`.
-8) There won't be much to see at this point, so add some placeholder data (photos, collections etc.) via the Django admin site or programmatically, as detailed in Django's [official tutorial](https://docs.djangoproject.com/en/5.2/intro/tutorial02/). From there, you can make any adjustments to the project code as desired.
+5) Set up the project using Django's [official tutorial](https://docs.djangoproject.com/en/5.2/intro/tutorial02/) as a guide (skipping the project and app creation/coding steps, i.e. the stuff that's already in this repository). Specifically, this includes applying the database migrations (creating/modifying your local database tables) using `python manage.py migrate` and creating an admin site user (login details) using `python manage.py createsuperuser`.
+6) Run the test suite using `python manage.py test`. If any tests fail, check that you've followed all of the instructions correctly and then create an issue in this GitHub repository if you're still encountering problems.
+7) Assuming you're setting up a local (development) environment, run the application on your machine using `python manage.py runserver`.
+8) There won't be much to see at this point, so add some placeholder data (photos, collections etc.) via the Django admin site or programmatically, as detailed in Django's [official tutorial](https://docs.djangoproject.com/en/5.2/intro/tutorial02/).
+9) 
 
-## Deployment
-When you're ready to deploy a production (i.e. public) version of the website, be sure to read Django's [deployment documentation](https://docs.djangoproject.com/en/5.2/howto/deployment/) (including the [deployment checklist](https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/)) to avoid security vulnerabilities and other issues.
+When you're ready to deploy a production (i.e. public) version of the website, make sure to:
+- Read Django's [deployment documentation](https://docs.djangoproject.com/en/5.2/howto/deployment/) (including the [deployment checklist](https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/)) to avoid security vulnerabilities and other issues.
+- Set .env file values that are appropriate for production
 
-For this project, the following deployment steps will also be necessary:
-
-- Configure and use [prod_settings.py](photo_gallery/photo_gallery/prod_settings.py) (which ensures that project settings are safe and appropriate for production), referring to the settings documentation where needed, rather than [settings.py](photo_gallery/photo_gallery/settings.py)
+- Use [prod_settings.py](photo_gallery/photo_gallery/prod_settings.py) rather than [settings.py](photo_gallery/photo_gallery/settings.py) as your settings file (which ensures that project settings are safe and appropriate for production), referring to the settings documentation where needed
 - Run a site name data migration (which is used to construct absolute URLs, e.g. in the XML sitemap and HTML tags) using the template and instructions in [site_name_migration_template.py](photo_gallery/photo_gallery/site_name_migration_template.py)
 - Change the [robots.txt](photo_gallery/templates/robots.txt) sitemap link to the correct URL (for simplicity, this doesn't use the site data in the previous step)
 - Configure contact message email alerts (implemented in [contact/views.py](photo_gallery/contact/views.py)) via the email settings in [prod_settings.py](photo_gallery/photo_gallery/prod_settings.py), if desired (otherwise, just check messages regularly via the Django admin site)
