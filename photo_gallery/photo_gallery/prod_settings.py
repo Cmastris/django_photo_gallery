@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 from .database_settings import DB_SETTINGS
+from .email_settings import *
 
 
 def get_list_from_env(env_key):
@@ -137,10 +138,3 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Emails
-# https://docs.djangoproject.com/en/5.2/topics/email/
-# TODO
-ADMINS = [('Admin1', 'email1@example.com'), ('Admin2', 'email2@example.com')]
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'from_email@example.com'

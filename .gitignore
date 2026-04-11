@@ -24,5 +24,6 @@ test_media
 #Other
 .env
 database_settings.py
+email_settings.py
 secrets.py
 photo_gallery/**/notes.py
