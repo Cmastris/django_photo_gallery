@@ -11,6 +11,8 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+from .database_settings import DB_SETTINGS
+
 
 def get_list_from_env(env_key):
     """Convert an env variable string/list to a Python list.
@@ -88,14 +90,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'photo_gallery.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# Database (refer to database_settings.py)
+DATABASES = DB_SETTINGS
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
