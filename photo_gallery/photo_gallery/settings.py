@@ -15,6 +15,24 @@ from .database_settings import *
 from .email_settings import *
 
 
+def get_bool_from_env(env_key, default_val=None):
+    """Convert an env variable Boolean string to a Python Boolean.
+    
+    Optionally provide a default value to use (str: 'True' or 'False') 
+    if the environment variable hasn't been set.
+    """
+    try:
+        env_string_lower = os.environ.get(env_key, default_val).lower()
+    except AttributeError:
+        raise AssertionError('You must set the environment variable or ' \
+        'pass a default value string (True/False)')
+    
+    if not (env_string_lower == 'true' or env_string_lower == 'false'):
+        raise AssertionError('The value must be a Boolean (True/False)')
+    
+    return env_string_lower == 'true'
+
+
 def get_list_from_env(env_key):
     """Convert an env variable string/list to a Python list.
   
@@ -36,6 +54,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Security
+# https://docs.djangoproject.com/en/5.2/topics/security/
 ALLOWED_HOSTS = get_list_from_env('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
@@ -110,10 +130,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
-LANGUAGE_CODE = 'en-gb'
-TIME_ZONE = 'Europe/London'
-USE_I18N = True
-USE_TZ = True
+LANGUAGE_CODE = os.environ.get('LANGUAGE_CODE')
+TIME_ZONE = os.environ.get('TIME_ZONE')
+USE_I18N = get_bool_from_env('USE_I18N', 'True')
+USE_TZ = get_bool_from_env('USE_TZ', 'True')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

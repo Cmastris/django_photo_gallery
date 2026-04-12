@@ -91,7 +91,7 @@ Note: this website is designed to be a personal portfolio that minimises the eff
 *Check out the code: template (HTML) files; [XML sitemap config](photo_gallery/photo_gallery/sitemap_config.py); [robots.txt](photo_gallery/templates/robots.txt).*
 
 ### Comprehensively tested
-Important functionality that extends or modifies Django's code is validated via over 40 unit tests. Wider functionality and cross-device rendering has also been manually tested thoroughly.
+Important functionality that extends or modifies Django's code is validated via over 50 unit tests. Wider functionality and cross-device rendering has also been manually tested thoroughly.
 
 ![Unit tests](/images/tests.png)
 
