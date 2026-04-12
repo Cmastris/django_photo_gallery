@@ -64,15 +64,15 @@ DEBUG = os.environ.get('DJANGO_DEBUG_MODE')
 # https://docs.djangoproject.com/en/5.2/topics/security/
 # Default to empty lists if the following env variables aren't set
 # These should be set in production!
-ALLOWED_HOSTS = get_list_from_env('ALLOWED_HOSTS')
-CSRF_TRUSTED_ORIGINS = get_list_from_env('CSRF_TRUSTED_ORIGINS')
+ALLOWED_HOSTS = get_list_from_env('DJANGO_ALLOWED_HOSTS')
+CSRF_TRUSTED_ORIGINS = get_list_from_env('DJANGO_CSRF_TRUSTED_ORIGINS')
 
 # Default to `True` if `DEBUG` is `False` and vice versa
 # if the following env variables aren't set
 # These should be set in production depending on your use of HTTPS!
-CSRF_COOKIE_SECURE = get_bool_from_env('CSRF_COOKIE_SECURE', str(not DEBUG))
-SESSION_COOKIE_SECURE = get_bool_from_env('SESSION_COOKIE_SECURE', str(not DEBUG))
-SECURE_SSL_REDIRECT = get_bool_from_env('SECURE_SSL_REDIRECT', str(not DEBUG))
+CSRF_COOKIE_SECURE = get_bool_from_env('DJANGO_CSRF_COOKIE_SECURE', str(not DEBUG))
+SESSION_COOKIE_SECURE = get_bool_from_env('DJANGO_SESSION_COOKIE_SECURE', str(not DEBUG))
+SECURE_SSL_REDIRECT = get_bool_from_env('DJANGO_SECURE_SSL_REDIRECT', str(not DEBUG))
 
 INSTALLED_APPS = [
     'crispy_forms',
@@ -147,10 +147,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 # These should be set to reflect your website's language and location
-LANGUAGE_CODE = os.environ.get('LANGUAGE_CODE')
-TIME_ZONE = os.environ.get('TIME_ZONE')
-USE_I18N = get_bool_from_env('USE_I18N', 'True')
-USE_TZ = get_bool_from_env('USE_TZ', 'True')
+LANGUAGE_CODE = os.environ.get('DJANGO_LANGUAGE_CODE')
+TIME_ZONE = os.environ.get('DJANGO_TIME_ZONE')
+USE_I18N = get_bool_from_env('DJANGO_USE_I18N', 'True')
+USE_TZ = get_bool_from_env('DJANGO_USE_TZ', 'True')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
