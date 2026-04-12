@@ -1,10 +1,15 @@
 """
-Django development settings.
-These settings are not suitable for a live/production site!
-Refer to `prod_settings.py` and deployment documentation for more details.
+Django settings - update as appropriate!
 
-More information: https://docs.djangoproject.com/en/5.2/topics/settings/
-All settings: https://docs.djangoproject.com/en/5.2/ref/settings/
+Review these settings and update them (via the corresponding environment 
+variables) to ensure they are appropriate for the app (e.g. localisation 
+settings) and environment (e.g. debug and security settings).
+To emphasise: some setting values are not suitable for a live/production site!
+Refer to the Django documentation for more details.
+
+https://docs.djangoproject.com/en/5.2/topics/settings/
+https://docs.djangoproject.com/en/5.2/ref/settings/
+https://docs.djangoproject.com/en/5.2/howto/deployment/
 """
 
 import os
@@ -52,11 +57,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# https://docs.djangoproject.com/en/5.2/ref/settings/#debug
+DEBUG = os.environ.get('DJANGO_DEBUG_MODE')
 
 # Security
 # https://docs.djangoproject.com/en/5.2/topics/security/
+# Default to empty lists if the following env variables aren't set
+# These should be set in production!
 ALLOWED_HOSTS = get_list_from_env('ALLOWED_HOSTS')
+CSRF_TRUSTED_ORIGINS = get_list_from_env('CSRF_TRUSTED_ORIGINS')
+
+# Default to `True` if `DEBUG` is `False` and vice versa
+# if the following env variables aren't set
+# These should be set in production depending on your use of HTTPS!
+CSRF_COOKIE_SECURE = get_bool_from_env('CSRF_COOKIE_SECURE', str(not DEBUG))
+SESSION_COOKIE_SECURE = get_bool_from_env('SESSION_COOKIE_SECURE', str(not DEBUG))
+SECURE_SSL_REDIRECT = get_bool_from_env('SECURE_SSL_REDIRECT', str(not DEBUG))
 
 INSTALLED_APPS = [
     'crispy_forms',
@@ -130,6 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
+# These should be set to reflect your website's language and location
 LANGUAGE_CODE = os.environ.get('LANGUAGE_CODE')
 TIME_ZONE = os.environ.get('TIME_ZONE')
 USE_I18N = get_bool_from_env('USE_I18N', 'True')

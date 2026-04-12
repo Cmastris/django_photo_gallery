@@ -108,15 +108,13 @@ Important functionality that extends or modifies Django's code is validated via 
 8) Run the test suite using `python manage.py test`. If any tests fail, check that you've followed all of the instructions correctly and then create an issue in this GitHub repository if you're still encountering problems.
 9) Assuming you're setting up a local (development) environment, run the application on your machine using `python manage.py runserver`.
 10) There won't be much to see at this point, so add some placeholder data (photos, collections etc.) via the Django admin site or programmatically, as detailed in Django's [official tutorial](https://docs.djangoproject.com/en/5.2/intro/tutorial02/).
-11) 
 
 When you're ready to deploy a production (i.e. public) version of the website, make sure to:
-- Read Django's [deployment documentation](https://docs.djangoproject.com/en/5.2/howto/deployment/) (including the [deployment checklist](https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/)) to avoid security vulnerabilities and other issues.
-- Set .env file values, database settings, and email settings that are appropriate for production
-- Use [prod_settings.py](photo_gallery/photo_gallery/prod_settings.py) rather than [settings.py](photo_gallery/photo_gallery/settings.py) as your settings file (which ensures that project settings are safe and appropriate for production), referring to the settings documentation where needed
+- Read Django's [deployment documentation](https://docs.djangoproject.com/en/5.2/howto/deployment/) (including the [deployment checklist](https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/)) to avoid security vulnerabilities and other issues
+- Set environment values, database settings, and email settings (which will be imported into [settings.py](photo_gallery/photo_gallery/settings.py)) that are appropriate for production
 - Run a site name data migration (which is used to construct absolute URLs, e.g. in the XML sitemap and HTML tags) using the template and instructions in [site_name_migration_template.py](photo_gallery/photo_gallery/site_name_migration_template.py)
 - Change the [robots.txt](photo_gallery/templates/robots.txt) sitemap link to the correct URL (for simplicity, this doesn't use the site data in the previous step)
-- Configure contact message email alerts (implemented in [contact/views.py](photo_gallery/contact/views.py)) via the email settings in [prod_settings.py](photo_gallery/photo_gallery/prod_settings.py), if desired (otherwise, just check messages regularly via the Django admin site)
+- Configure contact message email alerts (implemented in [contact/views.py](photo_gallery/contact/views.py)) via the email settings if desired (otherwise, just check messages regularly via the Django admin site)
 - Change the [favicon](photo_gallery/global_static/favicon.ico) if desired
 
 ## FAQs
